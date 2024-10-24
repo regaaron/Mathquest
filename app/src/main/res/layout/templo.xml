@@ -3,7 +3,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/montanas">
+    android:background="@drawable/templo">
 
     <!-- Lienzo que ocupa toda la pantalla -->
     <com.example.proyecto.CLienzo
@@ -16,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|top"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp">
 
         <!-- Botón del menú con icono superpuesto -->
@@ -48,10 +49,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="1dp"
         android:gravity="center">
 
         <FrameLayout
-            android:layout_width="280dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
@@ -61,7 +63,7 @@
                 android:layout_height="120dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="Título mundo"
-                android:src="@drawable/bandera_roja" />
+                android:src="@drawable/bandera_amarilla" />
 
             <!-- Texto sobre la bandera -->
             <TextView
@@ -69,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:padding="10dp"
-                android:text="Montañas\nDe La\nSuma Radiante"
+                android:text="Templo\nDe Los\nDividendos"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -106,7 +108,7 @@
                 android:id="@+id/btn1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/buton_level_red"
+                android:background="@drawable/buton_level_amarillo"
                 android:contentDescription="Botón 1"
                 android:scaleType="centerInside"
                 />
@@ -170,7 +172,7 @@
                 android:id="@+id/btn2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/buton_level_red"
+                android:background="@drawable/buton_level_amarillo"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -227,7 +229,7 @@
                 android:id="@+id/btn3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/buton_level_red"
+                android:background="@drawable/buton_level_amarillo"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -284,7 +286,7 @@
                 android:id="@+id/btn4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/buton_level_red"
+                android:background="@drawable/buton_level_amarillo"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -341,7 +343,7 @@
                 android:id="@+id/btn5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/buton_level_red"
+                android:background="@drawable/buton_level_amarillo"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -398,7 +400,7 @@
                 android:id="@+id/btn6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/buton_level_red"
+                android:background="@drawable/buton_level_amarillo"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -455,7 +457,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="50dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="10dp">

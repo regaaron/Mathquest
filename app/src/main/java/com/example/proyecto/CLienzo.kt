@@ -40,8 +40,8 @@ class CLienzo : View {
     private val frameCount = 10 // Número de frames
 
     // Dimensiones deseadas del sprite
-    private val spriteWidth = 200f // Ancho deseado
-    private val spriteHeight = 200f // Alto deseado
+    public var spriteWidth = 200f // Ancho deseado
+    public var spriteHeight = 200f // Alto deseado
 
     private var paint: Paint = Paint()
     private var path: Path = Path()
@@ -189,11 +189,11 @@ class CLienzo : View {
     }
 
     // Variables para controlar el movimiento del sprite
-    var spriteXTarget: Float = 0f
+    public var spriteXTarget: Float = 0f
     val movementSpeed: Float = 15f // Velocidad de movimiento (ajustable)
 
     // Función para mover el sprite hacia una posición de destino
-    private fun moveSpriteToTarget() {
+    public fun moveSpriteToTarget() {
         if (isMoving) return
 
 

@@ -26,6 +26,8 @@
         <activity android:name=".Ayuda" />
         <activity android:name=".Montanas"/>
         <activity android:name=".Desierto"/>
+        <activity android:name=".Volcan"/>
+        <activity android:name=".Templo" />
 
     </application>
 
