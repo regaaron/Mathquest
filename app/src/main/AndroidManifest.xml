@@ -24,6 +24,8 @@
 
         <activity android:name=".Juego" />
         <activity android:name=".Ayuda" />
+        <activity android:name=".Montanas"/>
+        <activity android:name=".Desierto"/>
 
     </application>
 

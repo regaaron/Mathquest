@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/desierto">
+
+    <!-- Lienzo que ocupa toda la pantalla -->
+    <com.example.proyecto.CLienzo
+        android:id="@+id/lienzo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Menú flotante en la esquina superior derecha -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp">
+
+        <!-- Botón del menú con icono superpuesto -->
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp">
+
+            <!-- Botón del menú (fondo) -->
+            <ImageButton
+                android:id="@+id/menu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_blue"
+                android:contentDescription="Botón de menú" />
+
+            <!-- Icono del menú -->
+            <ImageView
+                android:id="@+id/menu_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_menu"
+                android:contentDescription="Icono de menú" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <!-- Bandera con texto centrada en la pantalla -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="1dp"
+        android:gravity="center">
+
+        <FrameLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <!-- Imagen de la bandera -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="Título mundo"
+                android:src="@drawable/bandera_azul" />
+
+            <!-- Texto sobre la bandera -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="Desierto\nDe La\nSustraccion"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                android:shadowColor="#ffffff"
+                android:shadowDx="1"
+                android:shadowDy="2"
+                android:shadowRadius="3" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

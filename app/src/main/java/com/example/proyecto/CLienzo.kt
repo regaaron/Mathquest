@@ -10,6 +10,8 @@ import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PorterDuff
+import android.media.MediaPlayer
+import android.provider.MediaStore.Audio.Media
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -26,19 +28,20 @@ class CLienzo : View {
     private var backgroundColor: Int = 0
 
     // Posiciones para el movimiento
-    private var spriteX = 200f  // Posición X del sprite
-    private var spriteY = 150f  // Posición Y del sprite
+    public var spriteX = 200f  // Posición X del sprite
+    public var spriteY = 80f  // Posición Y del sprite
     private var motionTouchEventX = 0f
     private var motionTouchEventY = 0f
+    public var isMoving = false
 
     // Sprites (frames)
     private lateinit var spriteImages: List<Bitmap>
     private var currentFrame = 0
-    private val frameCount = 4 // Número de frames
+    private val frameCount = 10 // Número de frames
 
     // Dimensiones deseadas del sprite
-    private val spriteWidth = 150f // Ancho deseado
-    private val spriteHeight = 150f // Alto deseado
+    private val spriteWidth = 200f // Ancho deseado
+    private val spriteHeight = 200f // Alto deseado
 
     private var paint: Paint = Paint()
     private var path: Path = Path()
@@ -47,14 +50,17 @@ class CLienzo : View {
     private var currentY = 0f
     private var touchTolerance: Int = ViewConfiguration.get(context).scaledTouchSlop
 
+    private lateinit var sonidoCorrer: MediaPlayer
     // Variable para controlar la dirección (true = derecha, false = izquierda)
     private var facingRight = true
 
     constructor(context: Context?) : super(context) {
+        sonidoCorrer = MediaPlayer.create(context, R.raw.running)
         inicializa()
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+        sonidoCorrer = MediaPlayer.create(context, R.raw.running)
         inicializa()
     }
 
@@ -159,6 +165,7 @@ class CLienzo : View {
 
     // Funciones para mover el sprite
     private fun moveSpriteRight() {
+
         if(spriteX>=1940){
             spriteX=1940f
         }
@@ -187,6 +194,23 @@ class CLienzo : View {
 
     // Función para mover el sprite hacia una posición de destino
     private fun moveSpriteToTarget() {
+        if (isMoving) return
+
+
+        // Reinicia el MediaPlayer si ya fue detenido
+        if (!sonidoCorrer.isPlaying) {
+            sonidoCorrer.reset()  // Reinicia el MediaPlayer
+            sonidoCorrer = MediaPlayer.create(context, R.raw.running)  // Carga el sonido nuevamente
+            sonidoCorrer.isLooping = false  // Asegura que no se repita indefinidamente
+        }
+
+        // Ajusta el volumen (valores entre 0.0 y 1.0)
+        sonidoCorrer.setVolume(1.0f, 1.0f)
+
+        // Inicia la reproducción del sonido
+        sonidoCorrer.start()
+        // Establecer que el sprite está en movimiento
+        isMoving = true
         val handler = android.os.Handler()
         handler.post(object : Runnable {
             override fun run() {
@@ -203,11 +227,19 @@ class CLienzo : View {
                     updateFrame()
                 // Si el sprite aún no ha alcanzado el destino, continuar moviendo
                 if (abs(spriteX - spriteXTarget) > movementSpeed) {
+
                     handler.postDelayed(this, 16) // Repetir cada 16ms para suavidad (~60fps)
                 } else {
                     // Asegurar que el sprite esté exactamente en la posición objetivo
                     spriteX = spriteXTarget
                     invalidate()
+                    // Detén el sonido
+                    sonidoCorrer.stop()
+
+                    // Reinicia el MediaPlayer para la próxima vez que se quiera reproducir
+                    sonidoCorrer.prepare()
+
+                    isMoving = false
                 }
             }
         })
