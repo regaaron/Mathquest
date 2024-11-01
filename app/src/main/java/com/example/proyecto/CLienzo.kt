@@ -224,7 +224,7 @@ class CLienzo : View {
                     facingRight = false // Ajustar la dirección
                     invalidate()
                 }
-                    updateFrame()
+                updateFrame()
                 // Si el sprite aún no ha alcanzado el destino, continuar moviendo
                 if (abs(spriteX - spriteXTarget) > movementSpeed) {
 

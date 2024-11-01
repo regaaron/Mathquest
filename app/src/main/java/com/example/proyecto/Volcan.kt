@@ -24,14 +24,6 @@ class Volcan : AppCompatActivity() {
         }
 
         lienzo = findViewById(R.id.lienzo)
-        lienzo.spriteX=200f
-        lienzo.spriteY=280f
-
-
-
-        lienzo = findViewById(R.id.lienzo)
-        lienzo.spriteX=200f
-        lienzo.spriteY=280f
 
         var btn1 = findViewById<ImageButton>(R.id.btn1)
         var btn2 = findViewById<ImageButton>(R.id.btn2)
@@ -43,34 +35,142 @@ class Volcan : AppCompatActivity() {
         var btnSalir = findViewById<Button>(R.id.btnSalir)
         var btnJugar = findViewById<Button>(R.id.btnJugar)
 
-        btn1.setOnClickListener {
-            lienzo.spriteXTarget=100f
-            lienzo.moveSpriteToTarget()
+
+
+        btn1.post{
+            val with =btn1.width
+            val height = btn1.height
+            println("Button1:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn1.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button1:")
+            println("X: $x, Y: $y")
+
+            lienzo.spriteX=x.toFloat()+with/2
+            lienzo.spriteY=y.toFloat() - lienzo.spriteHeight-40f
+            lienzo.invalidate()
+
+            btn1.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+            }
+
         }
 
-        btn2.setOnClickListener {
-            lienzo.spriteXTarget=480f
-            lienzo.moveSpriteToTarget()
+        btn2.post{
+            val with =btn2.width
+            val height = btn2.height
+            println("Button2:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn2.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button2:")
+            println("X: $x, Y: $y")
+
+            btn2.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+            }
+
         }
 
-        btn3.setOnClickListener {
-            lienzo.spriteXTarget=840f
-            lienzo.moveSpriteToTarget()
+
+        btn3.post{
+            val with =btn3.width
+            val height = btn3.height
+            println("Button3:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn3.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button3:")
+            println("X: $x, Y: $y")
+
+            btn3.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+            }
+
         }
 
-        btn4.setOnClickListener {
-            lienzo.spriteXTarget=1180f
-            lienzo.moveSpriteToTarget()
+
+        btn4.post{
+            val with =btn4.width
+            val height = btn4.height
+            println("Button4:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn4.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button4:")
+            println("X: $x, Y: $y")
+
+            btn4.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+            }
+
         }
 
-        btn5.setOnClickListener {
-            lienzo.spriteXTarget=1560f
-            lienzo.moveSpriteToTarget()
+
+
+        btn5.post{
+            val with =btn5.width
+            val height = btn5.height
+            println("Button5:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn5.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button5:")
+            println("X: $x, Y: $y")
+
+            btn5.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+            }
+
         }
 
-        btn6.setOnClickListener {
-            lienzo.spriteXTarget=1920f
-            lienzo.moveSpriteToTarget()
+
+
+        btn6.post{
+            val with =btn6.width
+            val height = btn6.height
+            println("Button6:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn6.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button6:")
+            println("X: $x, Y: $y")
+
+            btn6.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+            }
+
         }
 
         btnSalir.setOnClickListener {

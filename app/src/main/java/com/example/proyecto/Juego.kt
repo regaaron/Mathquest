@@ -1,5 +1,7 @@
 package com.example.proyecto
 
+
+
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -9,10 +11,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 
 class Juego : AppCompatActivity() {
 
     lateinit var lienzo: CLienzo
+    var jugar=1;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,20 +35,101 @@ class Juego : AppCompatActivity() {
         val btn3 = findViewById<ImageButton>(R.id.btn3)
         val btn4 = findViewById<ImageButton>(R.id.btn4)
 
-        btn1.setOnClickListener {
-            lienzo.moverimg1()
+
+
+
+        btn1.post{
+            val with =btn1.width
+            val height = btn1.height
+            println("Button1:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn1.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button1:")
+            println("X: $x, Y: $y")
+
+            lienzo.spriteX=x.toFloat()+with/2
+            lienzo.spriteY=y.toFloat() - lienzo.spriteHeight-40f
+            lienzo.invalidate()
+
+            btn1.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+                jugar=1
+            }
+
         }
 
-        btn2.setOnClickListener {
-            lienzo.moverimg2()
+        btn2.post{
+            val with =btn2.width
+            val height = btn2.height
+            println("Button2:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn2.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button2:")
+            println("X: $x, Y: $y")
+
+            btn2.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+                jugar=2
+            }
+
         }
 
-        btn3.setOnClickListener {
-            lienzo.moverimg3()
+
+        btn3.post{
+            val with =btn3.width
+            val height = btn3.height
+            println("Button3:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn3.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button3:")
+            println("X: $x, Y: $y")
+
+            btn3.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+                jugar=3
+            }
+
         }
 
-        btn4.setOnClickListener {
-            lienzo.moverimg4()
+
+        btn4.post{
+            val with =btn4.width
+            val height = btn4.height
+            println("Button4:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn4.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button4:")
+            println("X: $x, Y: $y")
+
+            btn4.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+                jugar=4
+            }
+
         }
 
         val btnJugar = findViewById<Button>(R.id.btnJugar)
@@ -61,37 +147,61 @@ class Juego : AppCompatActivity() {
     }
 
     fun Jugar(){
-//        cordenadas img montanas
-        if(lienzo.spriteX > 0 && lienzo.spriteX <= 500 && !lienzo.isMoving ){
-            val intent = Intent(this, Montanas::class.java)
-            Toast.makeText(this, "pantalla1", Toast.LENGTH_SHORT).show()
-            startActivity(intent)
+        // Si el personaje se está moviendo
+        if (lienzo.isMoving) {
+            // Lanza una coroutine en el contexto del Main (UI thread)
+            GlobalScope.launch(Dispatchers.Main) {
+                // Espera hasta que el personaje deje de moverse
+                while (lienzo.isMoving) {
+                    delay(100) // Espera 100 ms entre cada verificación
+                }
+
+                // Ahora que el personaje ha dejado de moverse, llama a la función de la pantalla siguiente
+                when (jugar) {
+                    1 -> Montanas()
+                    2 -> Desierto()
+                    3 -> Volcan()
+                    4 -> Templo()
+                }
+            }
+        } else {
+            // Si el personaje no se está moviendo, procede directamente
+            when (jugar) {
+                1 -> Montanas()
+                2 -> Desierto()
+                3 -> Volcan()
+                4 -> Templo()
+            }
         }
-
-//                cordenadas img Desierto
-        if(lienzo.spriteX > 520 && lienzo.spriteX <= 1020 && !lienzo.isMoving){
-            val intent = Intent(this, Desierto::class.java)
-            Toast.makeText(this, "pantalla2", Toast.LENGTH_SHORT).show()
-
-            startActivity(intent)
-        }
-
-        //        cordenadas img Volcan
-        if(lienzo.spriteX > 1060 && lienzo.spriteX <= 1540 && !lienzo.isMoving){
-            val intent = Intent(this, Volcan::class.java)
-            Toast.makeText(this, "pantalla3", Toast.LENGTH_SHORT).show()
-
-            startActivity(intent)
-        }
-
-        //        cordenadas img Templo
-        if(lienzo.spriteX > 1580 && lienzo.spriteX <= 1970 && !lienzo.isMoving ){
-            val intent = Intent(this, Templo::class.java)
-            Toast.makeText(this, "pantalla4", Toast.LENGTH_SHORT).show()
-
-            startActivity(intent)
-        }
-
-
     }
+
+    fun Montanas(){
+        val intent = Intent(this, Montanas::class.java)
+        Toast.makeText(this, "pantalla1", Toast.LENGTH_SHORT).show()
+        startActivity(intent)
+    }
+
+    fun Desierto(){
+        val intent = Intent(this, Desierto::class.java)
+        Toast.makeText(this, "pantalla2", Toast.LENGTH_SHORT).show()
+        startActivity(intent)
+    }
+
+    fun Volcan(){
+        val intent = Intent(this, Volcan::class.java)
+        Toast.makeText(this, "pantalla3", Toast.LENGTH_SHORT).show()
+
+        startActivity(intent)
+    }
+
+    fun Templo(){
+        val intent = Intent(this, Templo::class.java)
+        Toast.makeText(this, "pantalla4", Toast.LENGTH_SHORT).show()
+
+        startActivity(intent)
+    }
+
+
+
+
 }

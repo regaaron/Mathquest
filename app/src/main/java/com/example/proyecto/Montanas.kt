@@ -5,14 +5,21 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.logging.Level
 
 class Montanas : AppCompatActivity() {
 
     lateinit var lienzo: CLienzo
+    var jugar=1;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -24,11 +31,6 @@ class Montanas : AppCompatActivity() {
         }
 
         lienzo = findViewById(R.id.lienzo)
-        lienzo.spriteX=200f
-        lienzo.spriteY=250f
-        lienzo.spriteWidth=220f
-        lienzo.spriteHeight=220f
-
 
         var btn1 = findViewById<ImageButton>(R.id.btn1)
         var btn2 = findViewById<ImageButton>(R.id.btn2)
@@ -40,34 +42,152 @@ class Montanas : AppCompatActivity() {
         var btnSalir = findViewById<Button>(R.id.btnSalir)
         var btnJugar = findViewById<Button>(R.id.btnJugar)
 
-        btn1.setOnClickListener {
-            lienzo.spriteXTarget=100f
-            lienzo.moveSpriteToTarget()
+
+
+        btn1.post{
+            val with =btn1.width
+            val height = btn1.height
+            println("Button1:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn1.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button1:")
+            println("X: $x, Y: $y")
+
+            lienzo.spriteX=x.toFloat()+with/2
+            lienzo.spriteY=y.toFloat() - lienzo.spriteHeight-40f
+            lienzo.invalidate()
+
+            btn1.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+                jugar=1
+            }
+
         }
 
-        btn2.setOnClickListener {
-            lienzo.spriteXTarget=480f
-            lienzo.moveSpriteToTarget()
+        btn2.post{
+            val with =btn2.width
+            val height = btn2.height
+            println("Button2:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn2.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button2:")
+            println("X: $x, Y: $y")
+
+            btn2.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+                jugar=2
+            }
+
         }
 
-        btn3.setOnClickListener {
-            lienzo.spriteXTarget=840f
-            lienzo.moveSpriteToTarget()
+
+        btn3.post{
+            val with =btn3.width
+            val height = btn3.height
+            println("Button3:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn3.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button3:")
+            println("X: $x, Y: $y")
+
+            btn3.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+                jugar=3
+            }
+
         }
 
-        btn4.setOnClickListener {
-            lienzo.spriteXTarget=1180f
-            lienzo.moveSpriteToTarget()
+
+        btn4.post{
+            val with =btn4.width
+            val height = btn4.height
+            println("Button4:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn4.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button4:")
+            println("X: $x, Y: $y")
+
+            btn4.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+                jugar=4
+            }
+
         }
 
-        btn5.setOnClickListener {
-            lienzo.spriteXTarget=1560f
-            lienzo.moveSpriteToTarget()
+
+
+        btn5.post{
+            val with =btn5.width
+            val height = btn5.height
+            println("Button5:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn5.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button5:")
+            println("X: $x, Y: $y")
+
+            btn5.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+                jugar=5
+            }
+
         }
 
-        btn6.setOnClickListener {
-            lienzo.spriteXTarget=1920f
-            lienzo.moveSpriteToTarget()
+
+
+        btn6.post{
+            val with =btn6.width
+            val height = btn6.height
+            println("Button6:")
+            println("Width: $with, Height: $height")
+
+            val location = IntArray(2)
+            btn6.getLocationOnScreen(location)
+            val x = location[0]
+            val y = location[1]
+
+            println("Button6:")
+            println("X: $x, Y: $y")
+
+            btn6.setOnClickListener {
+                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                lienzo.moveSpriteToTarget()
+                jugar=6
+            }
+
+        }
+
+        btnJugar.setOnClickListener {
+            Jugar()
         }
 
         btnSalir.setOnClickListener {
@@ -77,5 +197,35 @@ class Montanas : AppCompatActivity() {
 
     }
 
+    fun Jugar(){
+        // Si el personaje se está moviendo
+        if (lienzo.isMoving) {
+            // Lanza una coroutine en el contexto del Main (UI thread)
+            GlobalScope.launch(Dispatchers.Main) {
+                // Espera hasta que el personaje deje de moverse
+                while (lienzo.isMoving) {
+                    delay(100) // Espera 100 ms entre cada verificación
+                }
+
+                // Ahora que el personaje ha dejado de moverse, llama a la función de la pantalla siguiente
+                when (jugar) {
+                    1 -> startSuma1Activity()
+
+                }
+            }
+        } else {
+            // Si el personaje no se está moviendo, procede directamente
+            when (jugar) {
+                1 -> startSuma1Activity()
+
+            }
+        }
+    }
+
+    fun startSuma1Activity() {
+        val intent = Intent(this, Suma1::class.java)
+        Toast.makeText(this, "Suma1", Toast.LENGTH_SHORT).show()
+        startActivity(intent)
+    }
 
 }

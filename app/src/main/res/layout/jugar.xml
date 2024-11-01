@@ -9,15 +9,10 @@
     android:id="@+id/main">
 
     <!-- Canvas para el personaje animado -->
-<com.example.proyecto.CLienzo
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/lienzo"
-    >
-
-</com.example.proyecto.CLienzo>
-
-    <!-- Contenedor para las imágenes y descripciones -->
+    <com.example.proyecto.CLienzo
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lienzo" />
 
     <!-- Título principal -->
     <TextView
@@ -33,33 +28,29 @@
         android:shadowDy="2"
         android:shadowRadius="3"
         android:textColor="@android:color/background_dark"
-
         android:layout_marginTop="4dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-
+    <!-- LinearLayout horizontal para organizar las imágenes -->
     <LinearLayout
         android:id="@+id/linearLayoutImages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_margin="16dp"
-        android:padding="8dp"
-        android:weightSum="4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutButtons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Primer FrameLayout para la primera imagen y su texto -->
+        <!-- Primer FrameLayout -->
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginEnd="8dp">
+            android:layout_margin="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -95,12 +86,12 @@
             </LinearLayout>
         </FrameLayout>
 
-        <!-- Segundo FrameLayout para la segunda imagen y su texto -->
+        <!-- Segundo FrameLayout -->
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginEnd="8dp">
+            android:layout_margin="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -136,12 +127,12 @@
             </LinearLayout>
         </FrameLayout>
 
-        <!-- Tercer FrameLayout para la tercera imagen y su texto -->
+        <!-- Tercer FrameLayout -->
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginEnd="8dp">
+            android:layout_margin="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -177,11 +168,12 @@
             </LinearLayout>
         </FrameLayout>
 
-        <!-- Cuarto FrameLayout para la cuarta imagen y su texto -->
+        <!-- Cuarto FrameLayout -->
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_margin="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -231,7 +223,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Botón de Jugar -->
         <Button
             android:id="@+id/btnJugar"
             android:layout_width="wrap_content"
@@ -243,7 +234,6 @@
             android:padding="10dp"
             android:backgroundTint="@android:color/holo_green_dark" />
 
-        <!-- Botón de Salir -->
         <Button
             android:id="@+id/btnSalir"
             android:layout_width="wrap_content"
@@ -253,6 +243,5 @@
             android:textStyle="bold"
             android:padding="10dp"
             android:backgroundTint="@android:color/holo_red_dark" />
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

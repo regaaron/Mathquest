@@ -28,7 +28,7 @@
         <activity android:name=".Desierto"/>
         <activity android:name=".Volcan"/>
         <activity android:name=".Templo" />
-
+        <activity android:name=".Suma1"/>
     </application>
 
 </manifest>
