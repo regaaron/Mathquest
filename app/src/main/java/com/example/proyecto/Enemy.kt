@@ -3,6 +3,8 @@ package com.example.proyecto
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import com.example.proyecto.Knight.Companion
 
 
 class Enemy(context: Context, x: Float, y: Float) : Personaje(loadEnemySprite(context), x, y) {
@@ -50,5 +52,59 @@ class Enemy(context: Context, x: Float, y: Float) : Personaje(loadEnemySprite(co
                 }
             }
         }
+
     }
+
+    // Bitmap para el corazón y el número de vidas
+    // Tamaño deseado para los corazones
+    private val heartSize = 80 // Ajusta este valor para cambiar el tamaño del corazón
+
+    // Bitmap para el corazón, redimensionado al tamaño deseado
+    private val heartBitmap: Bitmap = Bitmap.createScaledBitmap(
+        BitmapFactory.decodeResource(context.resources, R.drawable.heart),
+        heartSize,
+        heartSize,
+        true
+    )
+    var lives: Int = 10 // Número de corazones/vidas
+
+
+    override fun draw(canvas: Canvas) {
+        // Dibuja el personaje usando la lógica de la clase base
+        super.draw(canvas)
+
+        // Define el número máximo de corazones por fila
+        val maxHeartsPerRow = 5
+
+        // Calcula la cantidad de filas y la cantidad de corazones en la última fila
+        val fullRows = lives / maxHeartsPerRow
+        val remainingHearts = lives % maxHeartsPerRow
+
+        // Espacio entre corazones
+        val heartSpacing = heartBitmap.width + 10
+
+        // Posición de la fila superior (ajusta según la posición del personaje)
+        var startY = y - heartBitmap.height - 10
+
+        // Dibuja cada fila de corazones
+        for (row in 0..fullRows) {
+            val heartsInThisRow = if (row < fullRows) maxHeartsPerRow else remainingHearts
+            val totalWidth = (heartsInThisRow * heartSpacing) - 10
+
+            // Calcula el `startX` para centrar la fila actual
+            val startX = x + (Enemy.SPRITE_WIDTH - totalWidth) / 2
+
+            // Dibuja los corazones en la fila actual
+            for (i in 0 until heartsInThisRow) {
+                val heartX = startX + i * heartSpacing
+                canvas.drawBitmap(heartBitmap, heartX, startY+200f, null)
+            }
+
+            // Desplaza `startY` para la siguiente fila
+            startY -= heartBitmap.height + 10
+        }
+    }
+
+
+
 }

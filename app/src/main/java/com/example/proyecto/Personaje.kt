@@ -64,6 +64,7 @@ open class Personaje(
         }, sprite.frameDuration * sprite.currentFrames.size.toLong()) // Tiempo basado en la duración de la animación
     }
 
+
     public fun moveSpriteToTarget() {
 //        if (isMoving) return
         state = "moviendo"
@@ -101,6 +102,38 @@ open class Personaje(
             }
         })
         update()
+    }
+
+    fun restarVida() {
+        if (isTakingDamage) return // Si ya está en estado de daño, ignorar llamadas adicionales
+
+        isTakingDamage = true
+        lives -= 1
+        val originalX = x
+        val handler = Handler(Looper.getMainLooper())
+        val vibrationDuration = 500L // Duración del efecto de vibración en milisegundos
+
+        var elapsed = 0L
+        handler.post(object : Runnable {
+            override fun run() {
+                elapsed += 30
+                val offsetX = if ((elapsed / 30) % 2 == 0) -10 else 10
+                x = originalX + offsetX
+
+                if (elapsed < vibrationDuration) {
+                    handler.postDelayed(this, 30)
+                } else {
+                    x = originalX // Restaurar posición
+                    isTakingDamage = false // Finalizar estado de daño
+                }
+            }
+        })
+
+        // Cambiar temporalmente el color del sprite a rojo
+        sprite.setColor(damageColor)
+        handler.postDelayed({
+            sprite.setColor(originalColor)
+        }, vibrationDuration)
     }
 
     fun moveLeft() { isMoving = true; direction = "izquierda";state = "moviendo"}

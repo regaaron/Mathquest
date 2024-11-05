@@ -47,7 +47,7 @@ class Suma1 : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btnRestarVida).setOnClickListener {
-            gameView.knight.lives--
+            gameView.enemy.lives--
         }
 
         findViewById<Button>(R.id.btnTarget).setOnClickListener {
