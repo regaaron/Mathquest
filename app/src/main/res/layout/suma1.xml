@@ -1,123 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/montanas">
+    tools:context=".MainActivity"
+    android:background="@drawable/desierto">
 
-    <!-- Lienzo que ocupa toda la pantalla -->
-    <com.example.proyecto.CLienzo
-        android:id="@+id/lienzo"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
+        <!-- Vista de juego -->
+        <com.example.proyecto.GameView
+            android:id="@+id/lienzo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <!-- Menú flotante en la esquina superior derecha -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|top"
-        android:layout_marginEnd="10dp">
-
-        <!-- Botón del menú con icono superpuesto -->
-        <FrameLayout
-            android:layout_width="60dp"
-            android:layout_height="60dp">
-
-            <!-- Botón del menú (fondo) -->
-            <ImageButton
-                android:id="@+id/menu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_blue"
-                android:contentDescription="Botón de menú" />
-
-            <!-- Icono del menú -->
-            <ImageView
-                android:id="@+id/menu_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/icon_menu"
-                android:contentDescription="Icono de menú" />
-        </FrameLayout>
-
-    </LinearLayout>
-
-    <!-- Bandera con texto centrada en la pantalla -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:gravity="center">
-
-        <FrameLayout
-            android:layout_width="280dp"
+        <!-- Controles del primer personaje -->
+        <LinearLayout
+            android:id="@+id/linearLayoutButtons1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity=""
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <!-- Imagen de la bandera -->
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="Título mundo"
-                android:src="@drawable/bandera_roja" />
-
-            <!-- Texto sobre la bandera -->
-            <TextView
+            <!-- Botón de mover a la izquierda -->
+            <Button
+                android:id="@+id/btnMoveLeft1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@android:color/holo_green_dark"
                 android:padding="10dp"
-                android:text="Montañas\nDe La\nSuma Radiante"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="monospace"
-                android:shadowColor="#ffffff"
-                android:shadowDx="1"
-                android:shadowDy="2"
-                android:shadowRadius="3" />
-        </FrameLayout>
+                android:text="Left"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+            <!-- Botón de mover a la derecha -->
+            <Button
+                android:id="@+id/btnMoveRight1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:padding="10dp"
+                android:text="Right"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <!-- Botones adicionales para Jugar y Salir al final -->
-    <LinearLayout
-        android:id="@+id/linearLayoutButtons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dp">
+            <!-- Botón de atacar -->
+            <Button
+                android:id="@+id/btnAttack1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:padding="10dp"
+                android:text="Attack"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <!-- Botón de Jugar -->
-        <Button
-            android:id="@+id/btnJugar"
+            <!-- Botón de detener -->
+            <Button
+                android:id="@+id/btnStop1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:padding="10dp"
+                android:text="Stop"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnRestarVida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:padding="10dp"
+                android:text="restar vida"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnTarget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:padding="10dp"
+                android:text="target"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <!-- Controles del segundo personaje -->
+        <LinearLayout
+            android:id="@+id/linearLayoutButtons2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="@android:color/holo_green_dark"
-            android:padding="10dp"
-            android:text="Jugar"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_gravity="end"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        <!-- Botón de Salir -->
-        <Button
-            android:id="@+id/btnSalir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/holo_red_dark"
-            android:padding="10dp"
-            android:text="Salir"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <!-- Botón de mover a la izquierda -->
+            <Button
+                android:id="@+id/btnMoveLeft2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:padding="10dp"
+                android:text="Left"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+            <!-- Botón de mover a la derecha -->
+            <Button
+                android:id="@+id/btnMoveRight2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:padding="10dp"
+                android:text="Right"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-</FrameLayout>
+            <!-- Botón de atacar -->
+            <Button
+                android:id="@+id/btnAttack2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:padding="10dp"
+                android:text="Attack"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Botón de detener -->
+            <Button
+                android:id="@+id/btnStop2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:padding="10dp"
+                android:text="Stop"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnPausar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:padding="10dp"
+                android:text="pausar Juego"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
