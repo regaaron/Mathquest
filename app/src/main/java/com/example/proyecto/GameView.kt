@@ -3,6 +3,7 @@ package com.example.proyecto
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.SurfaceView
 
@@ -20,7 +21,9 @@ class GameView @JvmOverloads constructor(
     private var elapsedTime = 0L // Tiempo transcurrido en milisegundos
     private var lastUpdateTime = System.currentTimeMillis() // Marca de tiempo de la última actualización
 
-
+    private var currentLevel: Level? = null // Nivel actual
+    private var userResult: Int? = null // Resultado ingresado por el usuario
+    private var gameState: String? = null // "Ganaste" o "Perdiste"
 
     companion object {
         const val SPRITE_WIDTH = 300 // Define el tamaño deseado
@@ -43,34 +46,57 @@ class GameView @JvmOverloads constructor(
     }
 
     fun update() {
-
         // Actualiza el tiempo transcurrido
         val currentTime = System.currentTimeMillis()
         elapsedTime += currentTime - lastUpdateTime
         lastUpdateTime = currentTime
 
-        // Actualizar lógica del juego aquí
+        // Lógica del juego
         knight.update()
         enemy.update()
+
+        // Verifica si hay un resultado ingresado
+        if (userResult != null && gameState == null) {
+            gameState = if (userResult == currentLevel?.expectedResult) "Ganaste" else "Perdiste"
+        }
     }
 
     fun draw() {
-        if(holder.surface.isValid){
+        if (holder.surface.isValid) {
             val canvas = holder.lockCanvas()
 
-            // Dibuja el fondo transparente en lugar de un color sólido
+            // Dibuja el fondo transparente
             canvas.drawColor(Color.TRANSPARENT, android.graphics.PorterDuff.Mode.CLEAR)
 
             knight.draw(canvas)
             enemy.draw(canvas)
 
-            // Configura la pintura para el tiempo transcurrido
+            // Dibuja el recuadro para el enunciado
+            paint.color = Color.WHITE
+            paint.style = Paint.Style.FILL
+            val rect = Rect(50, 50, width - 50, 200)
+            canvas.drawRect(rect, paint)
+
+            // Dibuja el texto del enunciado
+            paint.color = Color.BLACK
+            paint.textSize = 50f
+            paint.textAlign = Paint.Align.CENTER
+            val operation = currentLevel?.operation ?: "Esperando nivel"
+            canvas.drawText(operation, width / 2f, 150f, paint)
+
+            // Dibuja el estado del juego si aplica
+            if (gameState != null) {
+                paint.color = if (gameState == "Ganaste") Color.GREEN else Color.RED
+                canvas.drawText(gameState!!, width / 2f, height / 2f, paint)
+            }
+
+            // Muestra el tiempo transcurrido
             paint.color = Color.WHITE
             paint.textSize = 60f
-
-            // Muestra el tiempo en segundos en la esquina superior izquierda
+            paint.textAlign = Paint.Align.LEFT
             val seconds = elapsedTime / 1000
-            canvas.drawText("Tiempo: $seconds s", 50f, 100f, paint)
+            canvas.drawText("Tiempo: $seconds s", 50f, 300f, paint)
+
             holder.unlockCanvasAndPost(canvas)
         }
     }
@@ -79,10 +105,7 @@ class GameView @JvmOverloads constructor(
         if (thread == null || !thread!!.isAlive) {
             isPlaying = true
             thread = Thread(this)
-
-            // Restablecer lastUpdateTime al reanudar para ignorar el tiempo en pausa
             lastUpdateTime = System.currentTimeMillis()
-
             thread!!.start()
         }
     }
@@ -90,16 +113,27 @@ class GameView @JvmOverloads constructor(
     fun pause() {
         try {
             isPlaying = false
-            thread?.join() // Detener el hilo
-
+            thread?.join()
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
     }
 
+    // Métodos para configurar el nivel
+    fun setLevel(level: Level) {
+        currentLevel = level
+        userResult = null
+        gameState = null
+    }
 
+    // Métodos para recibir el resultado del usuario
+    fun setUserResult(result: Int) {
+        userResult = result
+    }
+
+    // Métodos de movimiento
     fun moveKnightLeft() = knight.moveLeft()
-    fun moveKnightRight() = knight.moveRight()
+    fun moveKnightRight() = knight.moveRight() // Gira hacia la derecha
     fun stopKnight() = knight.stopMoving()
     fun knightAttack() = knight.attack()
 
@@ -108,3 +142,9 @@ class GameView @JvmOverloads constructor(
     fun stopEnemy() = enemy.stopMoving()
     fun enemyAttack() = enemy.attack()
 }
+
+// Clase para manejar los niveles
+data class Level(
+    val operation: String, // Enunciado de la operación (por ejemplo, "5 + 3")
+    val expectedResult: Int // Resultado esperado (por ejemplo, 8)
+)

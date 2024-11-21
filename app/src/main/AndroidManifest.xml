@@ -29,6 +29,8 @@
         <activity android:name=".Volcan"/>
         <activity android:name=".Templo" />
         <activity android:name=".Suma1"/>
+        <activity android:name=".WinActivity" />
+        <activity android:name=".LoseActivity" />
     </application>
 
 </manifest>

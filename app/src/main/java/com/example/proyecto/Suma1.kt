@@ -1,86 +1,90 @@
 package com.example.proyecto
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import androidx.activity.enableEdgeToEdge
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class Suma1 : AppCompatActivity() {
 
     private lateinit var gameView: GameView
+    private lateinit var tvOperation: TextView
+    private lateinit var options: List<Button>
+    private var correctAnswer: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.suma1)
 
         gameView = findViewById(R.id.lienzo)
-        gameView.resume()
+        tvOperation = findViewById(R.id.tvOperation)
+        options = listOf(
+            findViewById(R.id.btnOption1),
+            findViewById(R.id.btnOption2),
+            findViewById(R.id.btnOption3),
+            findViewById(R.id.btnOption4)
+        )
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        setupNewLevel()
 
+        options.forEach { button ->
+            button.setOnClickListener {
+                val userAnswer = button.text.toString().toInt()
+                gameView.setUserResult(userAnswer) // Enviamos el resultado al GameView
 
-        findViewById<Button>(R.id.btnMoveLeft1).setOnClickListener {
-            gameView.moveKnightLeft()
-        }
+                // Actualizamos la lógica del ataque
+                if (userAnswer == correctAnswer) {
+                    gameView.knightAttack()
+                    gameView.enemy.lives--
+                    Toast.makeText(this, "¡Correcto!", Toast.LENGTH_SHORT).show()
+                } else {
+                    gameView.enemyAttack()
+                    gameView.knight.lives--
+                    Toast.makeText(this, "¡Incorrecto!", Toast.LENGTH_SHORT).show()
+                }
 
-        findViewById<Button>(R.id.btnMoveRight1).setOnClickListener {
-            gameView.moveKnightRight()
-        }
-
-        findViewById<Button>(R.id.btnStop1).setOnClickListener {
-//            if(gameView.isPlaying){
-//                gameView.pause()
-//            }else{
-//                gameView.resume()
-//            }
-//            gameView.knight.spriteXTarget=500
-//            gameView.knight.moveSpriteToTarget()
-//            gameView.knight.lives--
-            gameView.knight.stopMoving()
-        }
-
-        findViewById<Button>(R.id.btnRestarVida).setOnClickListener {
-            gameView.enemy.lives--
-        }
-
-        findViewById<Button>(R.id.btnTarget).setOnClickListener {
-            gameView.knight.spriteXTarget=500
-            gameView.knight.moveSpriteToTarget()
-        }
-
-        findViewById<Button>(R.id.btnPausar).setOnClickListener{
-            if (gameView.isPlaying){
-                gameView.pause()
-            }else{
-                gameView.resume()
+                checkGameOver()
+                setupNewLevel()
             }
         }
+    }
 
-        findViewById<Button>(R.id.btnAttack1).setOnClickListener {
-            gameView.knightAttack()
+    private fun setupNewLevel() {
+        // Generar nueva pregunta para el nivel de suma
+        val num1 = (1..10).random()
+        val num2 = (1..10).random()
+        correctAnswer = num1 + num2
+        val questionText = "$num1 + $num2 = ?"
+
+        // Configuramos el nivel en GameView
+        val level = Level(operation = questionText, expectedResult = correctAnswer)
+        gameView.setLevel(level)
+
+        // Generar respuestas para las opciones
+        val answers = mutableListOf(correctAnswer).apply {
+            while (size < 4) {
+                val wrongAnswer = (correctAnswer - 10..correctAnswer + 10).random()
+                if (wrongAnswer != correctAnswer && !contains(wrongAnswer)) add(wrongAnswer)
+            }
+        }.shuffled()
+
+        // Asignar las respuestas a los botones
+        options.forEachIndexed { index, button ->
+            button.text = answers[index].toString()
         }
+    }
 
-        findViewById<Button>(R.id.btnMoveLeft2).setOnClickListener {
-            gameView.moveEnemyLeft()
-        }
-
-        findViewById<Button>(R.id.btnMoveRight2).setOnClickListener {
-            gameView.moveEnemyRight()
-        }
-
-        findViewById<Button>(R.id.btnStop2).setOnClickListener {
-            gameView.stopEnemy()
-        }
-
-        findViewById<Button>(R.id.btnAttack2).setOnClickListener {
-            gameView.enemyAttack()
+    private fun checkGameOver() {
+        if (gameView.knight.lives <= 0) {
+            // Ir a la pantalla de derrota
+            startActivity(Intent(this, LoseActivity::class.java))
+            finish()
+        } else if (gameView.enemy.lives <= 0) {
+            // Ir a la pantalla de victoria
+            startActivity(Intent(this, WinActivity::class.java))
+            finish()
         }
     }
 
