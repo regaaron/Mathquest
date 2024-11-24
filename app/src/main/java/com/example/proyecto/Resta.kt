@@ -7,7 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
-class Suma1 : AppCompatActivity() {
+class Resta : AppCompatActivity() {
 
     private lateinit var gameView: GameView
     private lateinit var tvOperation: TextView
@@ -16,7 +16,7 @@ class Suma1 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.suma1)
+        setContentView(R.layout.resta)
 
         val nivel = intent.getIntExtra("nivel", 1) // Nivel actual, por defecto 1
 
@@ -55,24 +55,22 @@ class Suma1 : AppCompatActivity() {
     private fun setupNewLevel(nivel: Int) {
         val (range1, range2) = when (nivel) {
             1 -> 1..9 to 1..9 // Nivel 1: 1 dígito
-            2 -> 10..99 to 1..9 // Nivel 2: 2 dígitos + 1 dígito
-            3 -> 10..99 to 10..99 // Nivel 3: 2 dígitos + 2 dígitos
-            4 -> 100..999 to 10..99 // Nivel 4: 3 dígitos + 2 dígitos
-            5 -> 100..999 to 100..999 // Nivel 5: 3 dígitos + 3 dígitos
-            else -> 1..9 to 1..9 // Default a nivel 1
+            2 -> 10..99 to 1..9 // Nivel 2: 2 dígitos - 1 dígito
+            3 -> 10..99 to 10..99 // Nivel 3: 2 dígitos - 2 dígitos
+            4 -> 100..999 to 10..99 // Nivel 4: 3 dígitos - 2 dígitos
+            5 -> 100..999 to 100..999 // Nivel 5: 3 dígitos - 3 dígitos
+            else -> 1..9 to 1..9
         }
 
-        // Generar nueva pregunta
-        val num1 = range1.random()
-        val num2 = range2.random()
-        correctAnswer = num1 + num2
-        val questionText = "$num1 + $num2 = ?"
+        var num1 = range1.random()
+        var num2 = range2.random()
+        if (num1 < num2) num1 = num2.also { num2 = num1 } // Evitar resultados negativos
+        correctAnswer = num1 - num2
+        val questionText = "$num1 - $num2 = ?"
 
-        // Configurar el nivel en GameView
         val level = Level(operation = questionText, expectedResult = correctAnswer)
         gameView.setLevel(level)
 
-        // Generar respuestas para las opciones
         val answers = mutableListOf(correctAnswer).apply {
             while (size < 4) {
                 val wrongAnswer = (correctAnswer - 10..correctAnswer + 10).random()
@@ -80,12 +78,10 @@ class Suma1 : AppCompatActivity() {
             }
         }.shuffled()
 
-        // Asignar las respuestas a los botones
         options.forEachIndexed { index, button ->
             button.text = answers[index].toString()
         }
     }
-
 
     private fun checkGameOver() {
         if (gameView.knight.lives <= 0) {

@@ -7,7 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
-class Suma1 : AppCompatActivity() {
+class Division : AppCompatActivity() {
 
     private lateinit var gameView: GameView
     private lateinit var tvOperation: TextView
@@ -16,9 +16,9 @@ class Suma1 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.suma1)
+        //setContentView(R.layout.division1) aun no exisate el xml para la vista de las divisiones
 
-        val nivel = intent.getIntExtra("nivel", 1) // Nivel actual, por defecto 1
+        val nivel = intent.getIntExtra("nivel", 1)
 
         gameView = findViewById(R.id.lienzo)
         tvOperation = findViewById(R.id.tvOperation)
@@ -54,39 +54,34 @@ class Suma1 : AppCompatActivity() {
 
     private fun setupNewLevel(nivel: Int) {
         val (range1, range2) = when (nivel) {
-            1 -> 1..9 to 1..9 // Nivel 1: 1 dígito
-            2 -> 10..99 to 1..9 // Nivel 2: 2 dígitos + 1 dígito
-            3 -> 10..99 to 10..99 // Nivel 3: 2 dígitos + 2 dígitos
-            4 -> 100..999 to 10..99 // Nivel 4: 3 dígitos + 2 dígitos
-            5 -> 100..999 to 100..999 // Nivel 5: 3 dígitos + 3 dígitos
-            else -> 1..9 to 1..9 // Default a nivel 1
+            1 -> 2..10 to 1..5 // Nivel 1: División exacta simple
+            2 -> 11..20 to 1..5 // Nivel 2: Divisores pequeños, resultados enteros
+            3 -> 11..20 to 2..10 // Nivel 3: División exacta con números más grandes
+            4 -> 21..50 to 2..10 // Nivel 4: División de números grandes
+            5 -> 51..100 to 2..20 // Nivel 5: División avanzada
+            else -> 2..10 to 1..5
         }
 
-        // Generar nueva pregunta
-        val num1 = range1.random()
         val num2 = range2.random()
-        correctAnswer = num1 + num2
-        val questionText = "$num1 + $num2 = ?"
+        val correctQuotient = range1.random()
+        val num1 = correctQuotient * num2 // Asegurar que sea división exacta
+        correctAnswer = correctQuotient
+        val questionText = "$num1 ÷ $num2 = ?"
 
-        // Configurar el nivel en GameView
         val level = Level(operation = questionText, expectedResult = correctAnswer)
         gameView.setLevel(level)
 
-        // Generar respuestas para las opciones
         val answers = mutableListOf(correctAnswer).apply {
             while (size < 4) {
-                val wrongAnswer = (correctAnswer - 10..correctAnswer + 10).random()
+                val wrongAnswer = (correctAnswer - 3..correctAnswer + 3).random()
                 if (wrongAnswer != correctAnswer && !contains(wrongAnswer)) add(wrongAnswer)
             }
         }.shuffled()
 
-        // Asignar las respuestas a los botones
         options.forEachIndexed { index, button ->
             button.text = answers[index].toString()
         }
     }
-
-
     private fun checkGameOver() {
         if (gameView.knight.lives <= 0) {
             // Ir a la pantalla de derrota

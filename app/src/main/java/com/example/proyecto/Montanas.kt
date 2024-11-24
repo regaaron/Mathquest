@@ -37,12 +37,8 @@ class Montanas : AppCompatActivity() {
         var btn3 = findViewById<ImageButton>(R.id.btn3)
         var btn4 = findViewById<ImageButton>(R.id.btn4)
         var btn5 = findViewById<ImageButton>(R.id.btn5)
-        var btn6 = findViewById<ImageButton>(R.id.btn6)
-
         var btnSalir = findViewById<Button>(R.id.btnSalir)
         var btnJugar = findViewById<Button>(R.id.btnJugar)
-
-
 
         btn1.post{
             val with =btn1.width
@@ -67,7 +63,6 @@ class Montanas : AppCompatActivity() {
                 lienzo.moveSpriteToTarget()
                 jugar=1
             }
-
         }
 
         btn2.post{
@@ -92,7 +87,6 @@ class Montanas : AppCompatActivity() {
 
         }
 
-
         btn3.post{
             val with =btn3.width
             val height = btn3.height
@@ -114,7 +108,6 @@ class Montanas : AppCompatActivity() {
             }
 
         }
-
 
         btn4.post{
             val with =btn4.width
@@ -138,8 +131,6 @@ class Montanas : AppCompatActivity() {
 
         }
 
-
-
         btn5.post{
             val with =btn5.width
             val height = btn5.height
@@ -159,37 +150,11 @@ class Montanas : AppCompatActivity() {
                 lienzo.moveSpriteToTarget()
                 jugar=5
             }
-
-        }
-
-
-
-        btn6.post{
-            val with =btn6.width
-            val height = btn6.height
-            println("Button6:")
-            println("Width: $with, Height: $height")
-
-            val location = IntArray(2)
-            btn6.getLocationOnScreen(location)
-            val x = location[0]
-            val y = location[1]
-
-            println("Button6:")
-            println("X: $x, Y: $y")
-
-            btn6.setOnClickListener {
-                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
-                lienzo.moveSpriteToTarget()
-                jugar=6
-            }
-
         }
 
         btnJugar.setOnClickListener {
             Jugar()
         }
-
         btnSalir.setOnClickListener {
             val intent = Intent(this, Juego::class.java)
             startActivity(intent)
@@ -206,25 +171,21 @@ class Montanas : AppCompatActivity() {
                 while (lienzo.isMoving) {
                     delay(100) // Espera 100 ms entre cada verificación
                 }
-
-                // Ahora que el personaje ha dejado de moverse, llama a la función de la pantalla siguiente
-                when (jugar) {
-                    1 -> startSuma1Activity()
-
-                }
             }
         } else {
-            // Si el personaje no se está moviendo, procede directamente
             when (jugar) {
-                1 -> startSuma1Activity()
-
+                1 -> startSumaActivity(1)
+                2 -> startSumaActivity(2)
+                3 -> startSumaActivity(3)
+                4 -> startSumaActivity(4)
+                5 -> startSumaActivity(5)
             }
         }
     }
 
-    fun startSuma1Activity() {
+    fun startSumaActivity(nivel: Int) {
         val intent = Intent(this, Suma1::class.java)
-        Toast.makeText(this, "Suma1", Toast.LENGTH_SHORT).show()
+        intent.putExtra("nivel", nivel) // Enviamos el nivel como extra
         startActivity(intent)
     }
 
