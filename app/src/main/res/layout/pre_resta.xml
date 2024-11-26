@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/light_blue"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Texto explicativo con estilo llamativo -->
+        <TextView
+            android:id="@+id/tv_explanation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¡Aprendamos sobre la resta!"
+            android:textSize="24sp"
+            android:textColor="@color/primary_color"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18sp"
+            android:textColor="@color/primary_text"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Video explicativo con borde y diseño atractivo -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_background">
+
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/player_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+        <!-- Botones estilizados -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Regresar"
+                android:backgroundTint="@color/red_button"
+                android:textColor="@color/white"
+                android:layout_marginEnd="16dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_continue"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Continuar"
+                android:backgroundTint="@color/green_button"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

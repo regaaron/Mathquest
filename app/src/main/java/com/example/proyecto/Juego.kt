@@ -176,26 +176,26 @@ class Juego : AppCompatActivity() {
     }
 
     fun Montanas(){
-        val intent = Intent(this, Montanas::class.java)
+        val intent = Intent(this, PreSuma::class.java)
         Toast.makeText(this, "pantalla1", Toast.LENGTH_SHORT).show()
         startActivity(intent)
     }
 
     fun Desierto(){
-        val intent = Intent(this, Desierto::class.java)
+        val intent = Intent(this, PreResta::class.java)
         Toast.makeText(this, "pantalla2", Toast.LENGTH_SHORT).show()
         startActivity(intent)
     }
 
     fun Volcan(){
-        val intent = Intent(this, Volcan::class.java)
+        val intent = Intent(this, PreMultiplicacion::class.java)
         Toast.makeText(this, "pantalla3", Toast.LENGTH_SHORT).show()
 
         startActivity(intent)
     }
 
     fun Templo(){
-        val intent = Intent(this, Templo::class.java)
+        val intent = Intent(this, PreDivision::class.java)
         Toast.makeText(this, "pantalla4", Toast.LENGTH_SHORT).show()
 
         startActivity(intent)

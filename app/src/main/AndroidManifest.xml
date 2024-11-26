@@ -32,6 +32,19 @@
         <activity android:name=".Resta"/>
         <activity android:name=".WinActivity" />
         <activity android:name=".LoseActivity" />
+        <activity
+            android:name=".PreSuma"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".PreResta"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".PreMultiplicacion"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".PreDivision"
+            android:screenOrientation="landscape" />
+
     </application>
 
 </manifest>
