@@ -49,60 +49,55 @@ open class Personaje(
         sprite.draw(canvas,x,y,direction)
     }
 
-    fun attack(){
-        sprite.setState(Sprite.State.ATTACKING)
-        sprite.frameIndex = 0
+    fun attack(onComplete: (() -> Unit)? = null) {
+        sprite.setState(Sprite.State.ATTACKING) // Cambia el estado a atacar
+        sprite.frameIndex = 0 // Reinicia la animación al primer frame
         isMoving = false
         state = "atacando"
 
-        // Después de un retardo, regresa al estado "parado"
+        // Calcular la duración total de la animación
+        val attackDuration = sprite.frameDuration * sprite.currentFrames.size
+
+        // Usar un Handler para esperar a que termine la animación
         Handler().postDelayed({
             if (state == "atacando") {
                 state = "parado"
-                sprite.setState(Sprite.State.IDLE)
+                sprite.setState(Sprite.State.IDLE) // Vuelve al estado inicial
+                onComplete?.invoke() // Llama al callback si está definido
             }
-        }, sprite.frameDuration * sprite.currentFrames.size.toLong()) // Tiempo basado en la duración de la animación
+        }, attackDuration.toLong())
     }
 
 
-    public fun moveSpriteToTarget() {
-//        if (isMoving) return
-        state = "moviendo"
-        // Establecer que el sprite está en movimiento
-        sprite.frameDuration=16
+
+    fun moveSpriteToTarget(onComplete: (() -> Unit)? = null) {
+        if (isMoving) return // Evita conflictos si ya está en movimiento
         isMoving = true
+        sprite.frameDuration = 16
         val handler = android.os.Handler()
         handler.post(object : Runnable {
             override fun run() {
-                // Mover hacia la derecha o izquierda según la posición objetivo
                 if (x < spriteXTarget) {
                     x += speed
-//                    facingRight = true // Ajustar la dirección
                     direction = "derecha"
-                    update()
                 } else if (x > spriteXTarget) {
                     x -= speed
-//                    facingRight = false // Ajustar la dirección
                     direction = "izquierda"
-                    update()
                 }
-//                update()
-                // Si el sprite aún no ha alcanzado el destino, continuar moviendo
+                update()
+
                 if (abs(x - spriteXTarget) > speed) {
-                    handler.postDelayed(this, 32) // Repetir cada 16ms para suavidad (~60fps)
-                    update()
+                    handler.postDelayed(this, 16) // Continuar moviendo
                 } else {
-                    // Asegurar que el sprite esté exactamente en la posición objetivo
-                    x = spriteXTarget.toFloat()
-                    update()
+                    x = spriteXTarget.toFloat() // Asegurar posición exacta
                     isMoving = false
-                    sprite.frameDuration=90
-                    attack()
+                    sprite.frameDuration = 90 // Restaurar velocidad de animación
+                    onComplete?.invoke() // Ejecutar callback si está definido
                 }
             }
         })
-        update()
     }
+
 
 
     fun moveLeft() { isMoving = true; direction = "izquierda";state = "moviendo"}

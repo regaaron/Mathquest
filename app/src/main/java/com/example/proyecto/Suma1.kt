@@ -21,6 +21,10 @@ class Suma1 : AppCompatActivity() {
         val nivel = intent.getIntExtra("nivel", 1) // Nivel actual, por defecto 1
 
         gameView = findViewById(R.id.lienzo)
+        gameView.knight.x=300f
+        gameView.enemy.x=1300f
+        gameView.enemy.direction="izquierda"
+
         tvOperation = findViewById(R.id.tvOperation)
         options = listOf(
             findViewById(R.id.btnOption1),
@@ -31,25 +35,47 @@ class Suma1 : AppCompatActivity() {
 
         setupNewLevel(nivel)
 
+
+
         options.forEach { button ->
             button.setOnClickListener {
                 val userAnswer = button.text.toString().toInt()
                 gameView.setUserResult(userAnswer)
 
                 if (userAnswer == correctAnswer) {
-                    gameView.knightAttack()
-                    gameView.enemy.lives--
-                    Toast.makeText(this, "¡Correcto!", Toast.LENGTH_SHORT).show()
-                } else {
-                    gameView.enemyAttack()
-                    gameView.knight.lives--
-                    Toast.makeText(this, "¡Incorrecto!", Toast.LENGTH_SHORT).show()
-                }
+                    gameView.knight.spriteXTarget = 1280
+                    gameView.knight.moveSpriteToTarget {
+                        gameView.knight.attack {
+                            gameView.enemy.lives--
+                            gameView.knight.spriteXTarget = 300
+                            gameView.knight.moveSpriteToTarget {
 
-                checkGameOver()
-                setupNewLevel(nivel)
+                                gameView.knight.direction = "derecha" // Actualiza la dirección al final
+                                checkGameOver()
+                                setupNewLevel(nivel)
+                            }
+                        }
+                    }
+                } else {
+                    gameView.enemy.spriteXTarget = 400
+                    gameView.enemy.moveSpriteToTarget {
+                        gameView.enemy.attack {
+                            gameView.knight.lives--
+                            gameView.enemy.spriteXTarget = 1300
+                            gameView.enemy.moveSpriteToTarget {
+
+                                gameView.enemy.direction = "izquierda" // Actualiza la dirección al final
+                                checkGameOver()
+                                setupNewLevel(nivel)
+                            }
+                        }
+                    }
+                }
             }
         }
+
+
+
     }
 
     private fun setupNewLevel(nivel: Int) {
