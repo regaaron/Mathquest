@@ -7,7 +7,9 @@ import android.graphics.Canvas
 
 
 class Knight(context: Context, x: Float, y: Float) : Personaje(loadKnightSprite(context), x, y) {
+    var islife = true
 
+    lateinit var deadBitmap: Bitmap // Imagen del caballero muerto
     companion object {
         private const val SPRITE_WIDTH = 300
         private const val SPRITE_HEIGHT = 300
@@ -60,6 +62,16 @@ class Knight(context: Context, x: Float, y: Float) : Personaje(loadKnightSprite(
             }
         }
 
+
+    }
+    init {
+        // Carga y redimensiona la imagen del personaje muerto al tamaño definido
+        deadBitmap = Bitmap.createScaledBitmap(
+            BitmapFactory.decodeResource(context.resources, R.drawable.muerto),
+            SPRITE_WIDTH,
+            SPRITE_HEIGHT,
+            true
+        )
     }
 
     // Bitmap para el corazón y el número de vidas
@@ -77,21 +89,26 @@ class Knight(context: Context, x: Float, y: Float) : Personaje(loadKnightSprite(
 
     override fun draw(canvas: Canvas) {
         // Dibuja el personaje usando la lógica de la clase base
-        super.draw(canvas)
+        if (islife) {
+            super.draw(canvas)
 
-        // Espacio entre corazones
-        val heartSpacing = heartBitmap.width + 10
+            // Espacio entre corazones
+            val heartSpacing = heartBitmap.width + 10
 
-        // Calcula el ancho total de los corazones para centrar
-        val totalWidth = (lives * heartSpacing) - 10  // Resta un espaciado extra al final
+            // Calcula el ancho total de los corazones para centrar
+            val totalWidth = (lives * heartSpacing) - 10  // Resta un espaciado extra al final
 
-        // Calcula la posición inicial (centrada) del primer corazón
-        val startX = x + (SPRITE_WIDTH - totalWidth) / 2
+            // Calcula la posición inicial (centrada) del primer corazón
+            val startX = x + (SPRITE_WIDTH - totalWidth) / 2
 
-        for (i in 0 until lives) {
-            val heartX = startX + i * heartSpacing
-            val heartY = y - heartBitmap.height - 10 // Ajusta la posición sobre el caballero
-            canvas.drawBitmap(heartBitmap, heartX, heartY, null)
+            for (i in 0 until lives) {
+                val heartX = startX + i * heartSpacing
+                val heartY = y - heartBitmap.height - 10 // Ajusta la posición sobre el caballero
+                canvas.drawBitmap(heartBitmap, heartX, heartY, null)
+            }
+        }else{
+            // Si está muerto, solo dibuja la imagen del caballero muerto
+            canvas.drawBitmap(deadBitmap, x, y, null)
         }
     }
 }

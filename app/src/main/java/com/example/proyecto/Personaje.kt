@@ -13,7 +13,7 @@ open class Personaje(
 ) {
     var isMoving = false
     var state = "parado"
-    var direction = "deracha"
+    var direction = "derecha"
     var speed = 10
     var spriteXTarget: Int = 0
 

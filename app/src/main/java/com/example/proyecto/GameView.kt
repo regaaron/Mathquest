@@ -24,7 +24,7 @@ class GameView @JvmOverloads constructor(
     private var currentLevel: Level? = null // Nivel actual
     private var userResult: Int? = null // Resultado ingresado por el usuario
     private var gameState: String? = null // "Ganaste" o "Perdiste"
-
+    var win_end = false;
     companion object {
         const val SPRITE_WIDTH = 300 // Define el tamaño deseado
         const val SPRITE_HEIGHT = 300
@@ -75,14 +75,21 @@ class GameView @JvmOverloads constructor(
             paint.color = Color.WHITE
             paint.style = Paint.Style.FILL
             val rect = Rect(50, 50, width - 50, 200)
-            canvas.drawRect(rect, paint)
+            if (!win_end){
+                canvas.drawRect(rect, paint)
+            }
+
 
             // Dibuja el texto del enunciado
             paint.color = Color.BLACK
             paint.textSize = 50f
             paint.textAlign = Paint.Align.CENTER
             val operation = currentLevel?.operation ?: "Esperando nivel"
-            canvas.drawText(operation, width / 2f, 150f, paint)
+            if(!win_end){
+
+                canvas.drawText(operation, width / 2f, 150f, paint)
+            }
+
 
             // Dibuja el estado del juego si aplica
             if (gameState != null) {
@@ -95,7 +102,10 @@ class GameView @JvmOverloads constructor(
             paint.textSize = 60f
             paint.textAlign = Paint.Align.LEFT
             val seconds = elapsedTime / 1000
-            canvas.drawText("Tiempo: $seconds s", 50f, 300f, paint)
+            if(!win_end){
+                canvas.drawText("Tiempo: $seconds s", 50f, 300f, paint)
+            }
+
 
             holder.unlockCanvasAndPost(canvas)
         }
