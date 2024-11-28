@@ -1,6 +1,8 @@
 package com.example.proyecto
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
@@ -25,6 +27,7 @@ class GameView @JvmOverloads constructor(
     private var userResult: Int? = null // Resultado ingresado por el usuario
     private var gameState: String? = null // "Ganaste" o "Perdiste"
     var win_end = false;
+    private var backgroundBitmap: Bitmap? = null
     companion object {
         const val SPRITE_WIDTH = 300 // Define el tamaño deseado
         const val SPRITE_HEIGHT = 300
@@ -35,6 +38,7 @@ class GameView @JvmOverloads constructor(
     init {
         holder.setFormat(android.graphics.PixelFormat.TRANSPARENT)
         setZOrderOnTop(true)
+        backgroundBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.question)
     }
 
     override fun run() {
@@ -72,13 +76,18 @@ class GameView @JvmOverloads constructor(
             enemy.draw(canvas)
 
             // Dibuja el recuadro para el enunciado
-            paint.color = Color.WHITE
-            paint.style = Paint.Style.FILL
-            val rect = Rect(50, 50, width - 50, 200)
-            if (!win_end){
-                canvas.drawRect(rect, paint)
+            //paint.color = Color.WHITE
+            //paint.style = Paint.Style.FILL
+            //val rect = Rect(50, 50, width - 50, 200)
+            //if (!win_end){
+            //    canvas.drawRect(rect, paint)
+            //}
+            if (!win_end) {
+                backgroundBitmap?.let { bitmap ->
+                    val destRect = Rect(50, 50, width - 50, 200)
+                    canvas.drawBitmap(bitmap, null, destRect, null)
+                }
             }
-
 
             // Dibuja el texto del enunciado
             paint.color = Color.BLACK
@@ -86,7 +95,6 @@ class GameView @JvmOverloads constructor(
             paint.textAlign = Paint.Align.CENTER
             val operation = currentLevel?.operation ?: "Esperando nivel"
             if(!win_end){
-
                 canvas.drawText(operation, width / 2f, 150f, paint)
             }
 

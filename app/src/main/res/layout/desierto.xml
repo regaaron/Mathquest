@@ -389,65 +389,6 @@
                     android:contentDescription="Estrella 3" />
             </LinearLayout>
         </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_weight="1"
-            android:layout_margin="5dp">
-
-            <ImageButton
-                android:id="@+id/btn6"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/buton_level_azul"
-                android:contentDescription="Botón 2"
-                android:scaleType="centerInside"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="6"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="24sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_gravity="bottom"
-                android:paddingBottom="5dp">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="2dp"
-                    android:src="@drawable/estrella"
-                    android:contentDescription="Estrella 1" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="2dp"
-                    android:src="@drawable/estrella"
-                    android:contentDescription="Estrella 2" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/estrella"
-                    android:contentDescription="Estrella 3" />
-            </LinearLayout>
-        </FrameLayout>
-
-        <!-- Agregar más botones como el anterior -->
     </LinearLayout>
 
 
@@ -468,7 +409,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:backgroundTint="@android:color/holo_green_dark"
+            android:background="@drawable/verde"
             android:padding="10dp"
             android:text="Jugar"
             android:textSize="18sp"
@@ -479,7 +420,7 @@
             android:id="@+id/btnSalir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/holo_red_dark"
+            android:background="@drawable/rojo"
             android:padding="10dp"
             android:text="Salir"
             android:textSize="18sp"

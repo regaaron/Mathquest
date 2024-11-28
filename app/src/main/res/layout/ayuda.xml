@@ -211,7 +211,7 @@
             android:textStyle="bold"
             android:layout_marginEnd="16dp"
             android:padding="10dp"
-            android:backgroundTint="@android:color/holo_green_dark" />
+            android:background="@drawable/verde" />
 
         <!-- Botón de Salir -->
         <Button
@@ -222,7 +222,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:padding="10dp"
-            android:backgroundTint="@android:color/holo_red_dark" />
+            android:background="@drawable/rojo" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

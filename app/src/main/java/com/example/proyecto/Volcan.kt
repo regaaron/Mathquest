@@ -30,7 +30,6 @@ class Volcan : AppCompatActivity() {
         var btn3 = findViewById<ImageButton>(R.id.btn3)
         var btn4 = findViewById<ImageButton>(R.id.btn4)
         var btn5 = findViewById<ImageButton>(R.id.btn5)
-        var btn6 = findViewById<ImageButton>(R.id.btn6)
 
         var btnSalir = findViewById<Button>(R.id.btnSalir)
         var btnJugar = findViewById<Button>(R.id.btnJugar)
@@ -144,29 +143,6 @@ class Volcan : AppCompatActivity() {
             println("X: $x, Y: $y")
 
             btn5.setOnClickListener {
-                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
-                lienzo.moveSpriteToTarget()
-            }
-
-        }
-
-
-
-        btn6.post{
-            val with =btn6.width
-            val height = btn6.height
-            println("Button6:")
-            println("Width: $with, Height: $height")
-
-            val location = IntArray(2)
-            btn6.getLocationOnScreen(location)
-            val x = location[0]
-            val y = location[1]
-
-            println("Button6:")
-            println("X: $x, Y: $y")
-
-            btn6.setOnClickListener {
                 lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
                 lienzo.moveSpriteToTarget()
             }

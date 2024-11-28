@@ -21,8 +21,8 @@ class Suma1 : AppCompatActivity() {
         val nivel = intent.getIntExtra("nivel", 1) // Nivel actual, por defecto 1
 
         gameView = findViewById(R.id.lienzo)
-        gameView.knight.x=300f
-        gameView.enemy.x=1300f
+        gameView.knight.x=500f
+        gameView.enemy.x=1500f
         gameView.enemy.direction="izquierda"
 
         tvOperation = findViewById(R.id.tvOperation)
@@ -35,19 +35,17 @@ class Suma1 : AppCompatActivity() {
 
         setupNewLevel(nivel)
 
-
-
         options.forEach { button ->
             button.setOnClickListener {
                 val userAnswer = button.text.toString().toInt()
                 gameView.setUserResult(userAnswer)
 
                 if (userAnswer == correctAnswer) {
-                    gameView.knight.spriteXTarget = 1280
+                    gameView.knight.spriteXTarget = 1480
                     gameView.knight.moveSpriteToTarget {
                         gameView.knight.attack {
                             gameView.enemy.lives--
-                            gameView.knight.spriteXTarget = 300
+                            gameView.knight.spriteXTarget = 500
                             gameView.knight.moveSpriteToTarget {
 
                                 gameView.knight.direction = "derecha" // Actualiza la dirección al final
@@ -57,11 +55,11 @@ class Suma1 : AppCompatActivity() {
                         }
                     }
                 } else {
-                    gameView.enemy.spriteXTarget = 400
+                    gameView.enemy.spriteXTarget = 600
                     gameView.enemy.moveSpriteToTarget {
                         gameView.enemy.attack {
                             gameView.knight.lives--
-                            gameView.enemy.spriteXTarget = 1300
+                            gameView.enemy.spriteXTarget = 1500
                             gameView.enemy.moveSpriteToTarget {
 
                                 gameView.enemy.direction = "izquierda" // Actualiza la dirección al final
@@ -73,16 +71,13 @@ class Suma1 : AppCompatActivity() {
                 }
             }
         }
-
-
-
     }
 
     private fun setupNewLevel(nivel: Int) {
         val (range1, range2) = when (nivel) {
             1 -> 1..9 to 1..9 // Nivel 1: 1 dígito
             2 -> 10..99 to 1..9 // Nivel 2: 2 dígitos + 1 dígito
-            3 -> 10..99 to 10..99 // Nivel 3: 2 dígitos + 2 dígitos
+            3 -> 10..99 to 10..99 // Nivel 3: 2 dígitos a+ 2 dígitos
             4 -> 100..999 to 10..99 // Nivel 4: 3 dígitos + 2 dígitos
             5 -> 100..999 to 100..999 // Nivel 5: 3 dígitos + 3 dígitos
             else -> 1..9 to 1..9 // Default a nivel 1
