@@ -66,7 +66,7 @@ class Enemy(context: Context, x: Float, y: Float) : Personaje(loadEnemySprite(co
         heartSize,
         true
     )
-    var lives: Int = 10 // Número de corazones/vidas
+    var lives: Int = 1 // Número de corazones/vidas
 
 
     override fun draw(canvas: Canvas) {

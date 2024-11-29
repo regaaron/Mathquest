@@ -21,7 +21,7 @@ class WinActivity : AppCompatActivity() {
         gameView.knight.direction="derecha"
         var btnSalir = findViewById<Button>(R.id.btnSalir)
         btnSalir.setOnClickListener {
-//            startActivity(Intent(this, Juego::class.java))
+            startActivity(Intent(this, Montanas::class.java))
             finish()
         }
 

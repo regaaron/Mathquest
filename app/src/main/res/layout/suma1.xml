@@ -20,10 +20,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Botones de opciones -->
     <LinearLayout
         android:id="@+id/linearLayoutOptions"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
@@ -35,7 +34,7 @@
             android:id="@+id/btnOption1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+
             android:background="@drawable/sumares"
             android:text="Option 1" />
 
@@ -43,7 +42,7 @@
             android:id="@+id/btnOption2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+
             android:background="@drawable/sumares"
             android:text="Option 2" />
 
@@ -51,7 +50,7 @@
             android:id="@+id/btnOption3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+
             android:background="@drawable/sumares"
             android:text="Option 3" />
 
@@ -59,10 +58,10 @@
             android:id="@+id/btnOption4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:background="@drawable/sumares"
             android:text="Option 4" />
     </LinearLayout>
+
 
     <!-- Vista del juego -->
     <com.example.proyecto.GameView

@@ -2,6 +2,7 @@ package com.example.proyecto
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -13,17 +14,22 @@ class Suma1 : AppCompatActivity() {
     private lateinit var tvOperation: TextView
     private lateinit var options: List<Button>
     private var correctAnswer: Int = 0
+    lateinit var progresoDBHelper: SQLiteHelper
+    private var currentLevel: Int = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.suma1)
 
-        val nivel = intent.getIntExtra("nivel", 1) // Nivel actual, por defecto 1
+        currentLevel = intent.getIntExtra("nivel", 1)
 
         gameView = findViewById(R.id.lienzo)
         gameView.knight.x=500f
         gameView.enemy.x=1500f
         gameView.enemy.direction="izquierda"
+
+        progresoDBHelper = SQLiteHelper(this) //base de datos
 
         tvOperation = findViewById(R.id.tvOperation)
         options = listOf(
@@ -33,7 +39,7 @@ class Suma1 : AppCompatActivity() {
             findViewById(R.id.btnOption4)
         )
 
-        setupNewLevel(nivel)
+        setupNewLevel(currentLevel)
 
         options.forEach { button ->
             button.setOnClickListener {
@@ -49,8 +55,9 @@ class Suma1 : AppCompatActivity() {
                             gameView.knight.moveSpriteToTarget {
 
                                 gameView.knight.direction = "derecha" // Actualiza la dirección al final
-                                checkGameOver()
-                                setupNewLevel(nivel)
+                                checkGameOver(1,gameView.knight.lives)
+
+                                setupNewLevel(currentLevel)
                             }
                         }
                     }
@@ -63,8 +70,9 @@ class Suma1 : AppCompatActivity() {
                             gameView.enemy.moveSpriteToTarget {
 
                                 gameView.enemy.direction = "izquierda" // Actualiza la dirección al final
-                                checkGameOver()
-                                setupNewLevel(nivel)
+                                checkGameOver(1,gameView.knight.lives)
+
+                                setupNewLevel(currentLevel)
                             }
                         }
                     }
@@ -108,17 +116,50 @@ class Suma1 : AppCompatActivity() {
     }
 
 
-    private fun checkGameOver() {
-        if (gameView.knight.lives <= 0) {
-            // Ir a la pantalla de derrota
-            startActivity(Intent(this, LoseActivity::class.java))
-            finish()
-        } else if (gameView.enemy.lives <= 0) {
+//    private fun checkGameOver() {
+//        if (gameView.knight.lives <= 0) {
+//            // Ir a la pantalla de derrota
+//            startActivity(Intent(this, LoseActivity::class.java))
+//            finish()
+//        } else if (gameView.enemy.lives <= 0) {
+//            // Ir a la pantalla de victoria
+//            startActivity(Intent(this, WinActivity::class.java))
+//            finish()
+//        }
+//    }
+
+    private fun checkGameOver(nivel: Int, vidas: Int) {
+        println("GameOver :Ganaste")
+        if (gameView.enemy.lives <= 0) {
+            // El jugador ha ganado
+            val puntajeActual = progresoDBHelper.obtenerPuntajeNivel(1, currentLevel)
+
+            // Actualizar solo si las vidas obtenidas son mejores
+            if (vidas > puntajeActual!!) {
+                progresoDBHelper.modificarNivel(1, currentLevel, vidas)
+            }
+
+            // Desbloquear el siguiente nivel si es necesario
+            val siguienteNivel = currentLevel + 1
+            if (siguienteNivel <= 5) { // Asegúrate de no pasar el límite de niveles
+                val estadoSiguienteNivel = progresoDBHelper.obtenerPuntajeNivel(1, siguienteNivel)
+                if (estadoSiguienteNivel == null) { // Si está bloqueado (NULL)
+                    progresoDBHelper.modificarNivel(1, siguienteNivel, 0) // Desbloquear el nivel
+                }
+            }
+
+            // Avanza al siguiente nivel en la lógica del juego
+            currentLevel = siguienteNivel
+
             // Ir a la pantalla de victoria
             startActivity(Intent(this, WinActivity::class.java))
             finish()
         }
     }
+
+
+
+
 
     override fun onPause() {
         super.onPause()

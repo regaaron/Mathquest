@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +21,13 @@ import java.util.logging.Level
 class Montanas : AppCompatActivity() {
 
     lateinit var lienzo: CLienzo
+    lateinit var progresoDBHelper: SQLiteHelper
+    // Variables para los niveles, inicializadas como bloqueados (-1)
+    var lvl1 = -1
+    var lvl2 = -1
+    var lvl3 = -1
+    var lvl4 = -1
+    var lvl5 = -1
     var jugar=1;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +38,48 @@ class Montanas : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        progresoDBHelper = SQLiteHelper(this)
+
+// Consultas para obtener los valores de los niveles
+        val db = progresoDBHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT lvl1, lvl2, lvl3, lvl4, lvl5 FROM progreso WHERE id = 1", null)
+
+        val tvNiveles = findViewById<TextView>(R.id.tvNiveles)
+
+
+
+// Verificamos si hay resultados en el cursor
+        if (cursor.moveToFirst()) {
+            // Obtenemos los valores de cada nivel
+            lvl1 = if (cursor.isNull(cursor.getColumnIndex("lvl1"))) -1 else cursor.getInt(cursor.getColumnIndex("lvl1"))
+            lvl2 = if (cursor.isNull(cursor.getColumnIndex("lvl2"))) -1 else cursor.getInt(cursor.getColumnIndex("lvl2"))
+            lvl3 = if (cursor.isNull(cursor.getColumnIndex("lvl3"))) -1 else cursor.getInt(cursor.getColumnIndex("lvl3"))
+            lvl4 = if (cursor.isNull(cursor.getColumnIndex("lvl4"))) -1 else cursor.getInt(cursor.getColumnIndex("lvl4"))
+            lvl5 = if (cursor.isNull(cursor.getColumnIndex("lvl5"))) -1 else cursor.getInt(cursor.getColumnIndex("lvl5"))
+
+            // Mostramos los valores en el TextView
+            tvNiveles.text = """
+        Nivel 1: $lvl1 - Nivel 2: $lvl2
+        Nivel 3: $lvl3 - Nivel 4: $lvl4
+        Nivel 5: $lvl5
+    """.trimIndent()
+        } else {
+            tvNiveles.text = "No se encontraron niveles."
+        }
+
+        cursor.close()
+        db.close()
+
+// Actualizamos las estrellas para cada nivel
+        actualizarEstrellas(1, lvl1)
+        actualizarEstrellas(2, lvl2)
+        actualizarEstrellas(3, lvl3)
+        actualizarEstrellas(4, lvl4)
+        actualizarEstrellas(5, lvl5)
+
+        BloquerNiveles()
+
 
         lienzo = findViewById(R.id.lienzo)
 
@@ -80,9 +131,15 @@ class Montanas : AppCompatActivity() {
             println("X: $x, Y: $y")
 
             btn2.setOnClickListener {
-                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
-                lienzo.moveSpriteToTarget()
-                jugar=2
+                if(lvl2 == -1){
+                    Toast.makeText(this, "Nivel bloqueado", Toast.LENGTH_SHORT).show()
+
+                }else{
+                    lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                    lienzo.moveSpriteToTarget()
+                    jugar=2
+                }
+
             }
 
         }
@@ -102,9 +159,13 @@ class Montanas : AppCompatActivity() {
             println("X: $x, Y: $y")
 
             btn3.setOnClickListener {
-                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
-                lienzo.moveSpriteToTarget()
-                jugar=3
+                if(lvl3 == -1){
+                    Toast.makeText(this, "Nivel bloqueado", Toast.LENGTH_SHORT).show()
+                }else {
+                    lienzo.spriteXTarget = x.toFloat() + with / 2 - lienzo.spriteWidth / 2
+                    lienzo.moveSpriteToTarget()
+                    jugar = 3
+                }
             }
 
         }
@@ -124,9 +185,14 @@ class Montanas : AppCompatActivity() {
             println("X: $x, Y: $y")
 
             btn4.setOnClickListener {
-                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
-                lienzo.moveSpriteToTarget()
-                jugar=4
+                if (lvl4 == -1) {
+                    Toast.makeText(this, "Nivel bloqueado", Toast.LENGTH_SHORT).show()
+                }else{
+                    lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                    lienzo.moveSpriteToTarget()
+                    jugar=4
+                }
+
             }
 
         }
@@ -146,9 +212,14 @@ class Montanas : AppCompatActivity() {
             println("X: $x, Y: $y")
 
             btn5.setOnClickListener {
-                lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
-                lienzo.moveSpriteToTarget()
-                jugar=5
+                if(lvl5 == -1){
+                    Toast.makeText(this, "Nivel bloqueado", Toast.LENGTH_SHORT).show()
+                }else{
+                    lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
+                    lienzo.moveSpriteToTarget()
+                    jugar=5
+                }
+
             }
         }
 
@@ -162,6 +233,24 @@ class Montanas : AppCompatActivity() {
 
     }
 
+    fun BloquerNiveles(){
+        if(lvl2 == -1){
+            var tvlvl2 = findViewById<TextView>(R.id.tvNivel2)
+            tvlvl2.text = "X"
+        }
+        if(lvl3 == -1){
+            var tvlvl3 = findViewById<TextView>(R.id.tvNivel3)
+            tvlvl3.text = "X"
+        }
+        if(lvl4 == -1){
+            var tvlvl4 = findViewById<TextView>(R.id.tvNivel4)
+            tvlvl4.text = "X"
+        }
+        if(lvl5 == -1){
+            var tvlvl5 = findViewById<TextView>(R.id.tvNivel5)
+            tvlvl5.text = "X"
+        }
+    }
     fun Jugar(){
         // Si el personaje se está moviendo
         if (lienzo.isMoving) {
@@ -183,10 +272,48 @@ class Montanas : AppCompatActivity() {
         }
     }
 
+
     fun startSumaActivity(nivel: Int) {
         val intent = Intent(this, Suma1::class.java)
         intent.putExtra("nivel", nivel) // Enviamos el nivel como extra
         startActivity(intent)
     }
+
+    fun actualizarEstrellas(nivel: Int, estrellas: Int) {
+        // Identifica los ImageView del nivel
+        val estrella1 = findViewById<ImageView>(resources.getIdentifier("estrella1_btn$nivel", "id", packageName))
+        val estrella2 = findViewById<ImageView>(resources.getIdentifier("estrella2_btn$nivel", "id", packageName))
+        val estrella3 = findViewById<ImageView>(resources.getIdentifier("estrella3_btn$nivel", "id", packageName))
+
+        // Configura las estrellas según el progreso
+        when (estrellas) {
+            -1 -> {
+                estrella1.setImageResource(R.drawable.estrella_gris)
+                estrella2.setImageResource(R.drawable.estrella_gris)
+                estrella3.setImageResource(R.drawable.estrella_gris)
+            }
+            0 -> {
+                estrella1.setImageResource(R.drawable.estrella_gris)
+                estrella2.setImageResource(R.drawable.estrella_gris)
+                estrella3.setImageResource(R.drawable.estrella_gris)
+            }
+            1 -> {
+                estrella1.setImageResource(R.drawable.estrella)
+                estrella2.setImageResource(R.drawable.estrella_gris)
+                estrella3.setImageResource(R.drawable.estrella_gris)
+            }
+            2 -> {
+                estrella1.setImageResource(R.drawable.estrella)
+                estrella2.setImageResource(R.drawable.estrella)
+                estrella3.setImageResource(R.drawable.estrella_gris)
+            }
+            3 -> {
+                estrella1.setImageResource(R.drawable.estrella)
+                estrella2.setImageResource(R.drawable.estrella)
+                estrella3.setImageResource(R.drawable.estrella)
+            }
+        }
+    }
+
 
 }
