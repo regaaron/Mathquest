@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.media.MediaPlayer
 
 
 class Knight(context: Context, x: Float, y: Float) : Personaje(loadKnightSprite(context), x, y) {
@@ -72,6 +73,7 @@ class Knight(context: Context, x: Float, y: Float) : Personaje(loadKnightSprite(
             SPRITE_HEIGHT,
             true
         )
+        attackSound = MediaPlayer.create(context, R.raw.ataque)
     }
 
     // Bitmap para el corazón y el número de vidas

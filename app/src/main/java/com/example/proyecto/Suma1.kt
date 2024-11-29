@@ -82,20 +82,37 @@ class Suma1 : AppCompatActivity() {
     }
 
     private fun setupNewLevel(nivel: Int) {
+        // Rango de números según el nivel
         val (range1, range2) = when (nivel) {
             1 -> 1..9 to 1..9 // Nivel 1: 1 dígito
             2 -> 10..99 to 1..9 // Nivel 2: 2 dígitos + 1 dígito
-            3 -> 10..99 to 10..99 // Nivel 3: 2 dígitos a+ 2 dígitos
+            3 -> 10..99 to 10..99 // Nivel 3: 2 dígitos + 2 dígitos
             4 -> 100..999 to 10..99 // Nivel 4: 3 dígitos + 2 dígitos
             5 -> 100..999 to 100..999 // Nivel 5: 3 dígitos + 3 dígitos
             else -> 1..9 to 1..9 // Default a nivel 1
         }
 
-        // Generar nueva pregunta
+        // Generar números aleatorios
         val num1 = range1.random()
         val num2 = range2.random()
         correctAnswer = num1 + num2
-        val questionText = "$num1 + $num2 = ?"
+
+        // Banco de enunciados
+        val questionTemplates = listOf(
+            "Si Juan tiene %d manzanas y le dan %d más, ¿cuántas tiene?",
+            "En una bolsa hay %d caramelos. Si le añades %d más, ¿cuántos hay en total?",
+            "Un árbol tiene %d hojas y crecen %d más. ¿Cuántas hojas tiene ahora?",
+            "En una caja hay %d juguetes. Si le añades %d más, ¿cuántos juguetes hay en total?",
+            "Hay %d niños en el parque y llegan %d más. ¿Cuántos niños hay ahora?",
+            "Si un avión lleva %d pasajeros y suben %d más, ¿cuántos pasajeros hay en total?",
+            "Tienes %d lápices en tu estuche y compras %d más. ¿Cuántos tienes ahora?",
+            "Un barco transporta %d cajas. Si le cargan %d más, ¿cuántas cajas lleva en total?",
+            "En un estadio hay %d espectadores. Si llegan %d más, ¿cuántos espectadores hay ahora?",
+            "Una vaca produce %d litros de leche y otra vaca produce %d más. ¿Cuántos litros producen entre las dos?"
+        )
+
+        // Seleccionar una plantilla aleatoria y generar el enunciado
+        val questionText = questionTemplates.random().format(num1, num2)
 
         // Configurar el nivel en GameView
         val level = Level(operation = questionText, expectedResult = correctAnswer)
@@ -114,6 +131,7 @@ class Suma1 : AppCompatActivity() {
             button.text = answers[index].toString()
         }
     }
+
 
 
 //    private fun checkGameOver() {

@@ -16,7 +16,7 @@ open class Personaje(
     var direction = "derecha"
     var speed = 10
     var spriteXTarget: Int = 0
-
+    var attackSound: MediaPlayer? = null
 
     private var lastFrameTime: Long = System.currentTimeMillis()
 
@@ -54,6 +54,7 @@ open class Personaje(
         sprite.frameIndex = 0 // Reinicia la animación al primer frame
         isMoving = false
         state = "atacando"
+        attackSound?.start()
 
         // Calcular la duración total de la animación
         val attackDuration = sprite.frameDuration * sprite.currentFrames.size
