@@ -16,7 +16,7 @@ class Division : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.division1) aun no exisate el xml para la vista de las divisiones
+        setContentView(R.layout.division)
 
         val nivel = intent.getIntExtra("nivel", 1)
 

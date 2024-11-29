@@ -8,10 +8,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class Templo : AppCompatActivity(){
 
     lateinit var lienzo: CLienzo
+    var jugar=1;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -29,11 +34,8 @@ class Templo : AppCompatActivity(){
         var btn3 = findViewById<ImageButton>(R.id.btn3)
         var btn4 = findViewById<ImageButton>(R.id.btn4)
         var btn5 = findViewById<ImageButton>(R.id.btn5)
-
         var btnSalir = findViewById<Button>(R.id.btnSalir)
         var btnJugar = findViewById<Button>(R.id.btnJugar)
-
-
 
         btn1.post{
             val with =btn1.width
@@ -56,8 +58,8 @@ class Templo : AppCompatActivity(){
             btn1.setOnClickListener {
                 lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
                 lienzo.moveSpriteToTarget()
+                jugar=1
             }
-
         }
 
         btn2.post{
@@ -77,10 +79,10 @@ class Templo : AppCompatActivity(){
             btn2.setOnClickListener {
                 lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
                 lienzo.moveSpriteToTarget()
+                jugar=2
             }
 
         }
-
 
         btn3.post{
             val with =btn3.width
@@ -99,10 +101,10 @@ class Templo : AppCompatActivity(){
             btn3.setOnClickListener {
                 lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
                 lienzo.moveSpriteToTarget()
+                jugar=3
             }
 
         }
-
 
         btn4.post{
             val with =btn4.width
@@ -121,11 +123,10 @@ class Templo : AppCompatActivity(){
             btn4.setOnClickListener {
                 lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
                 lienzo.moveSpriteToTarget()
+                jugar=4
             }
 
         }
-
-
 
         btn5.post{
             val with =btn5.width
@@ -144,14 +145,44 @@ class Templo : AppCompatActivity(){
             btn5.setOnClickListener {
                 lienzo.spriteXTarget=x.toFloat() + with/2 - lienzo.spriteWidth/2
                 lienzo.moveSpriteToTarget()
+                jugar=5
             }
-
         }
 
+        btnJugar.setOnClickListener {
+            Jugar()
+        }
         btnSalir.setOnClickListener {
             val intent = Intent(this, Juego::class.java)
             startActivity(intent)
         }
+
     }
 
+    fun Jugar(){
+        // Si el personaje se está moviendo
+        if (lienzo.isMoving) {
+            // Lanza una coroutine en el contexto del Main (UI thread)
+            GlobalScope.launch(Dispatchers.Main) {
+                // Espera hasta que el personaje deje de moverse
+                while (lienzo.isMoving) {
+                    delay(100) // Espera 100 ms entre cada verificación
+                }
+            }
+        } else {
+            when (jugar) {
+                1 -> startDivisionActivity(1)
+                2 -> startDivisionActivity(2)
+                3 -> startDivisionActivity(3)
+                4 -> startDivisionActivity(4)
+                5 -> startDivisionActivity(5)
+            }
+        }
+    }
+
+    fun startDivisionActivity(nivel: Int) {
+        val intent = Intent(this, Division::class.java)
+        intent.putExtra("nivel", nivel) // Enviamos el nivel como extra
+        startActivity(intent)
+    }
 }
