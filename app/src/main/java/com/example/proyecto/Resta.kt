@@ -13,12 +13,15 @@ class Resta : AppCompatActivity() {
     private lateinit var tvOperation: TextView
     private lateinit var options: List<Button>
     private var correctAnswer: Int = 0
+    lateinit var progresoDBHelper: SQLiteHelper
+    private var currentLevel: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.resta)
 
-        val nivel = intent.getIntExtra("nivel", 1) // Nivel actual, por defecto 1
+        currentLevel = intent.getIntExtra("nivel", 1)
+        progresoDBHelper = SQLiteHelper(this) //base de datos
 
         gameView = findViewById(R.id.lienzo)
         gameView.knight.x=500f
@@ -33,7 +36,7 @@ class Resta : AppCompatActivity() {
             findViewById(R.id.btnOption4)
         )
 
-        setupNewLevel(nivel)
+        setupNewLevel(currentLevel)
 
         options.forEach { button ->
             button.setOnClickListener {
@@ -49,8 +52,8 @@ class Resta : AppCompatActivity() {
                             gameView.knight.moveSpriteToTarget {
 
                                 gameView.knight.direction = "derecha" // Actualiza la dirección al final
-                                checkGameOver()
-                                setupNewLevel(nivel)
+                                checkGameOver(1,gameView.knight.lives)
+                                setupNewLevel(currentLevel)
                             }
                         }
                     }
@@ -63,8 +66,9 @@ class Resta : AppCompatActivity() {
                             gameView.enemy.moveSpriteToTarget {
 
                                 gameView.enemy.direction = "izquierda" // Actualiza la dirección al final
-                                checkGameOver()
-                                setupNewLevel(nivel)
+                                checkGameOver(1,gameView.knight.lives)
+
+                                setupNewLevel(currentLevel)
                             }
                         }
                     }
@@ -104,17 +108,36 @@ class Resta : AppCompatActivity() {
         }
     }
 
-    private fun checkGameOver() {
-        if (gameView.knight.lives <= 0) {
-            // Ir a la pantalla de derrota
-            startActivity(Intent(this, LoseActivity::class.java))
-            finish()
-        } else if (gameView.enemy.lives <= 0) {
+
+    private fun checkGameOver(nivel: Int, vidas: Int) {
+        println("GameOver :Ganaste")
+        if (gameView.enemy.lives <= 0) {
+            // El jugador ha ganado
+            val puntajeActual = progresoDBHelper.obtenerPuntajeNivel(2, currentLevel)
+
+            // Actualizar solo si las vidas obtenidas son mejores
+            if (vidas > puntajeActual!!) {
+                progresoDBHelper.modificarNivel(2, currentLevel, vidas)
+            }
+
+            // Desbloquear el siguiente nivel si es necesario
+            val siguienteNivel = currentLevel + 1
+            if (siguienteNivel <= 5) { // Asegúrate de no pasar el límite de niveles
+                val estadoSiguienteNivel = progresoDBHelper.obtenerPuntajeNivel(2, siguienteNivel)
+                if (estadoSiguienteNivel == null) { // Si está bloqueado (NULL)
+                    progresoDBHelper.modificarNivel(2, siguienteNivel, 0) // Desbloquear el nivel
+                }
+            }
+
+            // Avanza al siguiente nivel en la lógica del juego
+            currentLevel = siguienteNivel
+
             // Ir a la pantalla de victoria
             startActivity(Intent(this, WinActivity::class.java))
             finish()
         }
     }
+
 
     override fun onPause() {
         super.onPause()
