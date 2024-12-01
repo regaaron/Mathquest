@@ -14,23 +14,22 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context,"progeso.db",nul
                 "lvl2 INTEGER," +
                 "lvl3 INTEGER," +
                 "lvl4 INTEGER," +
-                "lvl5 INTEGER)"
+                "lvl5 INTEGER," +
+                "tutorial INTEGER)"
         db!!.execSQL(ordenCrear)
 
         // Inserción de registros iniciales para cada mundo
         //1 = SUMA, 2 = RESTA, 3 = MULTIPLICACIÓN, 4 = DIVISIÓN
-        val insercion1 = "INSERT INTO progreso (id, lvl1, lvl2, lvl3, lvl4, lvl5) VALUES (1, 0, NULL, NULL, NULL, NULL)" // Montaña
-        val insercion2 = "INSERT INTO progreso (id, lvl1, lvl2, lvl3, lvl4, lvl5) VALUES (2, 0, NULL, NULL, NULL, NULL)" // Desierto
-        val insercion3 = "INSERT INTO progreso (id, lvl1, lvl2, lvl3, lvl4, lvl5) VALUES (3, 0, NULL, NULL, NULL, NULL)" // Volcán
-        val insercion4 = "INSERT INTO progreso (id, lvl1, lvl2, lvl3, lvl4, lvl5) VALUES (4, 0, NULL, NULL, NULL, NULL)" // Templo
+        val insercion1 = "INSERT INTO progreso (id, lvl1, lvl2, lvl3, lvl4, lvl5,tutorial) VALUES (1, 0, NULL, NULL, NULL, NULL,NULL)" // Montaña
+        val insercion2 = "INSERT INTO progreso (id, lvl1, lvl2, lvl3, lvl4, lvl5,tutorial) VALUES (2, 0, NULL, NULL, NULL, NULL,NULL)" // Desierto
+        val insercion3 = "INSERT INTO progreso (id, lvl1, lvl2, lvl3, lvl4, lvl5,tutorial) VALUES (3, 0, NULL, NULL, NULL, NULL,NULL)" // Volcán
+        val insercion4 = "INSERT INTO progreso (id, lvl1, lvl2, lvl3, lvl4, lvl5,tutorial) VALUES (4, 0, NULL, NULL, NULL, NULL,NULL)" // Templo
 
         // Ejecutar las inserciones
                 db.execSQL(insercion1)
                 db.execSQL(insercion2)
                 db.execSQL(insercion3)
                 db.execSQL(insercion4)
-
-
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -77,6 +76,23 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context,"progeso.db",nul
         return resultado
     }
 
+    fun tutorialHecho(mundo: Int): Boolean {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT tutorial FROM progreso WHERE id = ?", arrayOf(mundo.toString()))
 
+        var resultado = false
+        if (cursor.moveToFirst()) {
+            resultado = !cursor.isNull(0) && cursor.getInt(0) == 1
+        }
+        cursor.close()
+        db.close()
+        return resultado
+    }
 
+    fun seHizoTutorial(mundo: Int) {
+        val db = this.writableDatabase
+        val tutorialH = "UPDATE progreso SET tutorial = 1 WHERE id = $mundo"
+        db.execSQL(tutorialH)
+        db.close()
+    }
 }

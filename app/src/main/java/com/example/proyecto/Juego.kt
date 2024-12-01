@@ -18,6 +18,8 @@ class Juego : AppCompatActivity() {
 
     lateinit var lienzo: CLienzo
     var jugar=1;
+    lateinit var progresoDBHelper: SQLiteHelper
+    var intent1:Intent?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +36,7 @@ class Juego : AppCompatActivity() {
         val btn2 = findViewById<ImageButton>(R.id.btn2)
         val btn3 = findViewById<ImageButton>(R.id.btn3)
         val btn4 = findViewById<ImageButton>(R.id.btn4)
-
-
+        progresoDBHelper = SQLiteHelper(this)
 
 
         btn1.post{
@@ -176,28 +177,38 @@ class Juego : AppCompatActivity() {
     }
 
     fun Montanas(){
-        val intent = Intent(this, PreSuma::class.java)
+        if(progresoDBHelper.tutorialHecho(1))
+            this.intent1 = Intent(this, Suma1::class.java)
+        else
+            this.intent1 = Intent(this, PreSuma::class.java)
         Toast.makeText(this, "pantalla1", Toast.LENGTH_SHORT).show()
         startActivity(intent)
     }
 
     fun Desierto(){
-        val intent = Intent(this, PreResta::class.java)
+        if(progresoDBHelper.tutorialHecho(2))
+            this.intent1 = Intent(this, Resta::class.java)
+        else
+            this.intent1 = Intent(this, PreResta::class.java)
         Toast.makeText(this, "pantalla2", Toast.LENGTH_SHORT).show()
         startActivity(intent)
     }
 
     fun Volcan(){
-        val intent = Intent(this, PreMultiplicacion::class.java)
+        if(progresoDBHelper.tutorialHecho(3))
+            this.intent1 = Intent(this, Multiplicacion::class.java)
+        else
+            this.intent1 = Intent(this, PreMultiplicacion::class.java)
         Toast.makeText(this, "pantalla3", Toast.LENGTH_SHORT).show()
-
         startActivity(intent)
     }
 
     fun Templo(){
-        val intent = Intent(this, PreDivision::class.java)
+        if(progresoDBHelper.tutorialHecho(1))
+            this.intent1 = Intent(this, Division::class.java)
+        else
+            this.intent1 = Intent(this, PreDivision::class.java)
         Toast.makeText(this, "pantalla4", Toast.LENGTH_SHORT).show()
-
         startActivity(intent)
     }
 

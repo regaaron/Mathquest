@@ -1,12 +1,14 @@
 package com.example.proyecto
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
 class LoseActivity : AppCompatActivity() {
     private lateinit var gameView: GameView
+    var sound:MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lose)
@@ -25,6 +27,8 @@ class LoseActivity : AppCompatActivity() {
 //            startActivity(Intent(this, Juego::class.java))
             finish()
         }
+        sound = MediaPlayer.create(this, R.raw.lose)
+        sound?.start()
     }
 
 

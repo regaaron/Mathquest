@@ -1,5 +1,6 @@
 package com.example.proyecto
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -29,6 +30,7 @@ class Desierto : AppCompatActivity() {
     var lvl4 = -1
     var lvl5 = -1
     var jugar=1;
+    @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -314,6 +316,4 @@ class Desierto : AppCompatActivity() {
             }
         }
     }
-
-
 }

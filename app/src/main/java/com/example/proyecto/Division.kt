@@ -13,12 +13,15 @@ class Division : AppCompatActivity() {
     private lateinit var tvOperation: TextView
     private lateinit var options: List<Button>
     private var correctAnswer: Int = 0
+    lateinit var progresoDBHelper: SQLiteHelper
+    private var currentLevel: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.division)
 
-        val nivel = intent.getIntExtra("nivel", 1)
+        currentLevel = intent.getIntExtra("nivel", 1)
+        progresoDBHelper = SQLiteHelper(this) //base de datos
 
         gameView = findViewById(R.id.lienzo)
         gameView.knight.x=500f
@@ -33,7 +36,7 @@ class Division : AppCompatActivity() {
             findViewById(R.id.btnOption4)
         )
 
-        setupNewLevel(nivel)
+        setupNewLevel(currentLevel)
 
         options.forEach { button ->
             button.setOnClickListener {
@@ -49,8 +52,8 @@ class Division : AppCompatActivity() {
                             gameView.knight.moveSpriteToTarget {
 
                                 gameView.knight.direction = "derecha" // Actualiza la dirección al final
-                                checkGameOver()
-                                setupNewLevel(nivel)
+                                checkGameOver(1,gameView.knight.lives)
+                                setupNewLevel(currentLevel)
                             }
                         }
                     }
@@ -63,8 +66,8 @@ class Division : AppCompatActivity() {
                             gameView.enemy.moveSpriteToTarget {
 
                                 gameView.enemy.direction = "izquierda" // Actualiza la dirección al final
-                                checkGameOver()
-                                setupNewLevel(nivel)
+                                checkGameOver(1,gameView.knight.lives)
+                                setupNewLevel(currentLevel)
                             }
                         }
                     }
@@ -87,7 +90,21 @@ class Division : AppCompatActivity() {
         val correctQuotient = range1.random()
         val num1 = correctQuotient * num2 // Asegurar que sea división exacta
         correctAnswer = correctQuotient
-        val questionText = "$num1 ÷ $num2 = ?"
+        val questionTemplates = listOf(
+            "Si tienes %d caramelos y los repartes entre %d niños, ¿cuántos caramelos recibe cada niño?",
+            "Hay %d manzanas y quieres ponerlas en %d bolsas iguales. ¿Cuántas manzanas habrá en cada bolsa?",
+            "Un pastel se corta en %d porciones y se reparte entre %d personas. ¿Cuántas porciones recibe cada persona?",
+            "Un tren tiene %d pasajeros y hay %d vagones. Si todos se distribuyen equitativamente, ¿cuántos pasajeros hay en cada vagón?",
+            "Si compras %d huevos y los guardas en cajas de %d, ¿cuántas cajas llenas tendrás?",
+            "En una mesa hay %d sillas y las organizas en %d filas. ¿Cuántas sillas hay en cada fila?",
+            "Si un edificio tiene %d habitaciones y se distribuyen en %d pisos, ¿cuántas habitaciones hay por piso?",
+            "Tienes %d litros de jugo y los repartes en %d botellas. ¿Cuántos litros hay en cada botella?",
+            "En una granja hay %d gallinas y se dividen en %d corrales. ¿Cuántas gallinas hay en cada corral?",
+            "Un cocinero tiene %d porciones de pizza y las reparte entre %d clientes. ¿Cuántas porciones recibe cada cliente?"
+        )
+
+        // Seleccionar una plantilla aleatoria y generar el enunciado
+        val questionText = questionTemplates.random().format(num1, num2)
 
         val level = Level(operation = questionText, expectedResult = correctAnswer)
         gameView.setLevel(level)
@@ -103,14 +120,38 @@ class Division : AppCompatActivity() {
             button.text = answers[index].toString()
         }
     }
-    private fun checkGameOver() {
-        if (gameView.knight.lives <= 0) {
-            // Ir a la pantalla de derrota
-            startActivity(Intent(this, LoseActivity::class.java))
+    private fun checkGameOver(nivel: Int, vidas: Int) {
+        println("GameOver :Ganaste")
+        if (gameView.enemy.lives <= 0) {
+            // El jugador ha ganado
+            val puntajeActual = progresoDBHelper.obtenerPuntajeNivel(4, currentLevel)
+
+            // Actualizar solo si las vidas obtenidas son mejores
+            if (vidas > puntajeActual!!) {
+                progresoDBHelper.modificarNivel(4, currentLevel, vidas)
+            }
+
+            // Desbloquear el siguiente nivel si es necesario
+            val siguienteNivel = currentLevel + 1
+            if (siguienteNivel <= 5) { // Asegúrate de no pasar el límite de niveles
+                val estadoSiguienteNivel = progresoDBHelper.obtenerPuntajeNivel(4, siguienteNivel)
+                if (estadoSiguienteNivel == null) { // Si está bloqueado (NULL)
+                    progresoDBHelper.modificarNivel(4, siguienteNivel, 0) // Desbloquear el nivel
+                }
+            }
+
+            // Avanza al siguiente nivel en la lógica del juego
+            currentLevel = siguienteNivel
+
+            val win = Intent(this, WinActivity::class.java)
+            intent.putExtra("vidas", gameView.knight.lives) // Enviamos el nivel como extra
+            intent.putExtra("niv", "division")
+            startActivity(win)
             finish()
-        } else if (gameView.enemy.lives <= 0) {
-            // Ir a la pantalla de victoria
-            startActivity(Intent(this, WinActivity::class.java))
+        }
+        else{
+            val lose = Intent(this, LoseActivity::class.java)
+            startActivity(lose)
             finish()
         }
     }

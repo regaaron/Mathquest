@@ -6,12 +6,13 @@
     android:background="@drawable/desierto">
 
     <!-- Lienzo que ocupa toda la pantalla -->
+
+    <!-- Menú flotante en la esquina superior derecha -->
     <com.example.proyecto.CLienzo
         android:id="@+id/lienzo"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- Menú flotante en la esquina superior derecha -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -13,12 +13,15 @@ class Multiplicacion : AppCompatActivity() {
     private lateinit var tvOperation: TextView
     private lateinit var options: List<Button>
     private var correctAnswer: Int = 0
+    lateinit var progresoDBHelper: SQLiteHelper
+    private var currentLevel: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.multiplicacion)
 
-        val nivel = intent.getIntExtra("nivel", 1)
+        currentLevel = intent.getIntExtra("nivel", 1)
+        progresoDBHelper = SQLiteHelper(this) //base de datos
 
         gameView = findViewById(R.id.lienzo)
         gameView.knight.x=500f
@@ -33,7 +36,7 @@ class Multiplicacion : AppCompatActivity() {
             findViewById(R.id.btnOption4)
         )
 
-        setupNewLevel(nivel)
+        setupNewLevel(currentLevel)
 
         options.forEach { button ->
             button.setOnClickListener {
@@ -49,8 +52,8 @@ class Multiplicacion : AppCompatActivity() {
                             gameView.knight.moveSpriteToTarget {
 
                                 gameView.knight.direction = "derecha" // Actualiza la dirección al final
-                                checkGameOver()
-                                setupNewLevel(nivel)
+                                checkGameOver(1,gameView.knight.lives)
+                                setupNewLevel(currentLevel)
                             }
                         }
                     }
@@ -63,8 +66,8 @@ class Multiplicacion : AppCompatActivity() {
                             gameView.enemy.moveSpriteToTarget {
 
                                 gameView.enemy.direction = "izquierda" // Actualiza la dirección al final
-                                checkGameOver()
-                                setupNewLevel(nivel)
+                                checkGameOver(1,gameView.knight.lives)
+                                setupNewLevel(currentLevel)
                             }
                         }
                     }
@@ -86,7 +89,21 @@ class Multiplicacion : AppCompatActivity() {
         val num1 = range1.random()
         val num2 = range2.random()
         correctAnswer = num1 * num2
-        val questionText = "$num1 × $num2 = ?"
+        val questionTemplates = listOf(
+            "Si tienes %d bolsas con %d manzanas cada una, ¿cuántas manzanas tienes en total?",
+            "En una mesa hay %d filas de %d sillas. ¿Cuántas sillas hay en total?",
+            "Si compras %d cajas de huevos y cada una tiene %d huevos, ¿cuántos huevos tienes?",
+            "Un tren tiene %d vagones y cada vagón lleva %d pasajeros. ¿Cuántos pasajeros hay en total?",
+            "Si plantas %d árboles y cada uno da %d frutos, ¿cuántos frutos tendrás?",
+            "Un edificio tiene %d pisos y cada piso tiene %d habitaciones. ¿Cuántas habitaciones hay en total?",
+            "En una granja hay %d corrales y cada corral tiene %d gallinas. ¿Cuántas gallinas hay en total?",
+            "Si haces %d filas de %d sillas, ¿cuántas sillas tienes en total?",
+            "Si cada alumno tiene %d lápices y hay %d alumnos en la clase, ¿cuántos lápices hay en total?",
+            "Un pastelero hace %d pasteles y cada pastel tiene %d pisos. ¿Cuántos pisos de pastel hay en total?"
+        )
+
+        // Seleccionar una plantilla aleatoria y generar el enunciado
+        val questionText = questionTemplates.random().format(num1, num2)
 
         val level = Level(operation = questionText, expectedResult = correctAnswer)
         gameView.setLevel(level)
@@ -103,14 +120,38 @@ class Multiplicacion : AppCompatActivity() {
         }
     }
 
-    private fun checkGameOver() {
-        if (gameView.knight.lives <= 0) {
-            // Ir a la pantalla de derrota
-            startActivity(Intent(this, LoseActivity::class.java))
+    private fun checkGameOver(nivel: Int, vidas: Int) {
+        println("GameOver :Ganaste")
+        if (gameView.enemy.lives <= 0) {
+            // El jugador ha ganado
+            val puntajeActual = progresoDBHelper.obtenerPuntajeNivel(3, currentLevel)
+
+            // Actualizar solo si las vidas obtenidas son mejores
+            if (vidas > puntajeActual!!) {
+                progresoDBHelper.modificarNivel(3, currentLevel, vidas)
+            }
+
+            // Desbloquear el siguiente nivel si es necesario
+            val siguienteNivel = currentLevel + 1
+            if (siguienteNivel <= 5) { // Asegúrate de no pasar el límite de niveles
+                val estadoSiguienteNivel = progresoDBHelper.obtenerPuntajeNivel(3, siguienteNivel)
+                if (estadoSiguienteNivel == null) { // Si está bloqueado (NULL)
+                    progresoDBHelper.modificarNivel(3, siguienteNivel, 0) // Desbloquear el nivel
+                }
+            }
+
+            // Avanza al siguiente nivel en la lógica del juego
+            currentLevel = siguienteNivel
+
+            val win = Intent(this, WinActivity::class.java)
+            intent.putExtra("vidas", gameView.knight.lives) // Enviamos el nivel como extra
+            intent.putExtra("niv", "multiplicacion")
+            startActivity(win)
             finish()
-        } else if (gameView.enemy.lives <= 0) {
-            // Ir a la pantalla de victoria
-            startActivity(Intent(this, WinActivity::class.java))
+        }
+        else{
+            val lose = Intent(this, LoseActivity::class.java)
+            startActivity(lose)
             finish()
         }
     }

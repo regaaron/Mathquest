@@ -169,15 +169,18 @@ class Suma1 : AppCompatActivity() {
             // Avanza al siguiente nivel en la lógica del juego
             currentLevel = siguienteNivel
 
-            // Ir a la pantalla de victoria
-            startActivity(Intent(this, WinActivity::class.java))
+            val win = Intent(this, WinActivity::class.java)
+            intent.putExtra("vidas", gameView.knight.lives) // Enviamos el nivel como extra
+            intent.putExtra("niv", "suma")
+            startActivity(win)
+            finish()
+        }
+        else{
+            val lose = Intent(this, LoseActivity::class.java)
+            startActivity(lose)
             finish()
         }
     }
-
-
-
-
 
     override fun onPause() {
         super.onPause()

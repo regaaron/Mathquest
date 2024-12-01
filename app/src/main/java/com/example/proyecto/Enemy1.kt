@@ -7,10 +7,10 @@ import android.graphics.Canvas
 import com.example.proyecto.Knight.Companion
 
 
-class Enemy(context: Context, x: Float, y: Float) : Personaje(loadEnemySprite(context), x, y) {
+class Enemy1(context: Context, x: Float, y: Float) : Personaje(loadEnemySprite(context), x, y) {
 
     companion object {
-        const val SPRITE_WIDTH = 600
+        private const val SPRITE_WIDTH = 600
         private const val SPRITE_HEIGHT = 600
 
         private fun loadEnemySprite(context: Context): Sprite {

@@ -67,7 +67,6 @@ class Resta : AppCompatActivity() {
 
                                 gameView.enemy.direction = "izquierda" // Actualiza la dirección al final
                                 checkGameOver(1,gameView.knight.lives)
-
                                 setupNewLevel(currentLevel)
                             }
                         }
@@ -91,7 +90,22 @@ class Resta : AppCompatActivity() {
         var num2 = range2.random()
         if (num1 < num2) num1 = num2.also { num2 = num1 } // Evitar resultados negativos
         correctAnswer = num1 - num2
-        val questionText = "$num1 - $num2 = ?"
+        // Banco de enunciados
+        val questionTemplates = listOf(
+            "Si tienes %d caramelos y comes %d, ¿cuántos te quedan?",
+            "Un árbol tiene %d hojas, pero se caen %d. ¿Cuántas hojas quedan?",
+            "En una bolsa hay %d frutas, pero sacas %d. ¿Cuántas frutas quedan?",
+            "Si hay %d carros en el estacionamiento y se van %d, ¿cuántos quedan?",
+            "Un avión lleva %d pasajeros, pero %d bajan. ¿Cuántos quedan a bordo?",
+            "Tenías %d monedas y gastaste %d. ¿Cuántas monedas te quedan?",
+            "Una granja tiene %d gallinas, pero se venden %d. ¿Cuántas gallinas quedan?",
+            "Hay %d peces en un estanque, pero %d son atrapados. ¿Cuántos quedan?",
+            "En una caja hay %d juguetes y se rompen %d. ¿Cuántos juguetes quedan en buen estado?",
+            "Si en un estadio hay %d espectadores y se van %d, ¿cuántos quedan?"
+        )
+
+        // Seleccionar una plantilla aleatoria y generar el enunciado
+        val questionText = questionTemplates.random().format(num1, num2)
 
         val level = Level(operation = questionText, expectedResult = correctAnswer)
         gameView.setLevel(level)
@@ -107,7 +121,6 @@ class Resta : AppCompatActivity() {
             button.text = answers[index].toString()
         }
     }
-
 
     private fun checkGameOver(nivel: Int, vidas: Int) {
         println("GameOver :Ganaste")
@@ -132,12 +145,18 @@ class Resta : AppCompatActivity() {
             // Avanza al siguiente nivel en la lógica del juego
             currentLevel = siguienteNivel
 
-            // Ir a la pantalla de victoria
-            startActivity(Intent(this, WinActivity::class.java))
+            val win = Intent(this, WinActivity::class.java)
+            intent.putExtra("vidas", gameView.knight.lives) // Enviamos el nivel como extra
+            intent.putExtra("niv", "resta")
+            startActivity(win)
+            finish()
+        }
+        else{
+            val lose = Intent(this, LoseActivity::class.java)
+            startActivity(lose)
             finish()
         }
     }
-
 
     override fun onPause() {
         super.onPause()
