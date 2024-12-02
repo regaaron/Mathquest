@@ -4,6 +4,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class WinActivity : AppCompatActivity() {
@@ -24,14 +25,16 @@ class WinActivity : AppCompatActivity() {
         gameView.knight.lives = intent.getIntExtra("vidas", 1)
         var nivel = intent.getStringExtra("niv")
         var btnSalir = findViewById<Button>(R.id.btnSalir)
+
         btnSalir.setOnClickListener {
+            Toast.makeText(this,"nivel: ${nivel}", Toast.LENGTH_SHORT).show()
             when (nivel) {
                 "suma" -> startActivity(Intent(this, Montanas::class.java))
                 "resta" -> startActivity(Intent(this, Desierto::class.java))
                 "multiplicacion" -> startActivity(Intent(this, Volcan::class.java))
                 "division" -> startActivity(Intent(this, Templo::class.java))
             }
-            finish()
+//            finish()
         }
         sound = MediaPlayer.create(this, R.raw.win)
         sound?.start()

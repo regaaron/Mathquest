@@ -144,12 +144,12 @@ class Multiplicacion : AppCompatActivity() {
             currentLevel = siguienteNivel
 
             val win = Intent(this, WinActivity::class.java)
-            intent.putExtra("vidas", gameView.knight.lives) // Enviamos el nivel como extra
-            intent.putExtra("niv", "multiplicacion")
+            win.putExtra("vidas", gameView.knight.lives) // Enviamos el nivel como extra
+            win.putExtra("niv", "multiplicacion")
             startActivity(win)
             finish()
         }
-        else{
+        if(gameView.knight.lives<=0){
             val lose = Intent(this, LoseActivity::class.java)
             startActivity(lose)
             finish()

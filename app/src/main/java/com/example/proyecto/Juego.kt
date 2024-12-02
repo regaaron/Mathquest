@@ -182,7 +182,7 @@ class Juego : AppCompatActivity() {
         else
             this.intent1 = Intent(this, PreSuma::class.java)
         Toast.makeText(this, "pantalla1", Toast.LENGTH_SHORT).show()
-        startActivity(intent)
+        startActivity(intent1)
     }
 
     fun Desierto(){
@@ -191,7 +191,7 @@ class Juego : AppCompatActivity() {
         else
             this.intent1 = Intent(this, PreResta::class.java)
         Toast.makeText(this, "pantalla2", Toast.LENGTH_SHORT).show()
-        startActivity(intent)
+        startActivity(intent1)
     }
 
     fun Volcan(){
@@ -200,7 +200,7 @@ class Juego : AppCompatActivity() {
         else
             this.intent1 = Intent(this, PreMultiplicacion::class.java)
         Toast.makeText(this, "pantalla3", Toast.LENGTH_SHORT).show()
-        startActivity(intent)
+        startActivity(intent1)
     }
 
     fun Templo(){
@@ -209,10 +209,7 @@ class Juego : AppCompatActivity() {
         else
             this.intent1 = Intent(this, PreDivision::class.java)
         Toast.makeText(this, "pantalla4", Toast.LENGTH_SHORT).show()
-        startActivity(intent)
+        startActivity(intent1)
     }
-
-
-
-
+    
 }
