@@ -16,7 +16,8 @@ class GameView @JvmOverloads constructor(
 
     var isPlaying = false
     private var thread: Thread? = null
-    val enemy = Enemy(context, 300f, 550f)
+    private var currentWorld: Int = 1
+    lateinit var enemy: Enemy
     val knight = Knight(context, 100f, 700f)
 
     private val paint = Paint()
@@ -159,6 +160,11 @@ class GameView @JvmOverloads constructor(
     fun moveEnemyRight() = enemy.moveRight()
     fun stopEnemy() = enemy.stopMoving()
     fun enemyAttack() = enemy.attack()
+
+    fun setWorld(world: Int) {
+        currentWorld = world
+        this.enemy = Enemy( context,300f, 550f,currentWorld)
+    }
 }
 
 // Clase para manejar los niveles

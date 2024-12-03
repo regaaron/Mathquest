@@ -7,45 +7,154 @@ import android.graphics.Canvas
 import com.example.proyecto.Knight.Companion
 
 
-class Enemy(context: Context, x: Float, y: Float) : Personaje(loadEnemySprite(context), x, y) {
-
+open class Enemy(context: Context, x: Float, y: Float,worldNumber:Int) : Personaje(loadEnemySprite(context,worldNumber), x, y) {
     companion object {
         const val SPRITE_WIDTH = 600
         private const val SPRITE_HEIGHT = 600
 
-        private fun loadEnemySprite(context: Context): Sprite {
-            val idleFrames = loadFrames(context, arrayOf(
-                R.drawable.enemy_parado1,
-                R.drawable.enemy_parado2,
-                R.drawable.enemy_parado3,
-                R.drawable.enemy_parado4,
-                R.drawable.enemy_parado5,
-                R.drawable.enemy_parado6
-            ))
+        private fun loadEnemySprite(context: Context, worldNumber: Int): Sprite {
+            val idleFrames: List<Bitmap>
+            val moveFrames: List<Bitmap>
+            val attackFrames: List<Bitmap>
 
-            val moveFrames = loadFrames(context, arrayOf(
-                R.drawable.enemy_move1,
-                R.drawable.enemy_move2,
-                R.drawable.enemy_move3,
-                R.drawable.enemy_move4,
-                R.drawable.enemy_move5,
-                R.drawable.enemy_move6
-            ))
-
-            val attackFrames = loadFrames(context, arrayOf(
-                R.drawable.enemy_attack1,
-                R.drawable.enemy_attack2,
-                R.drawable.enemy_attack3,
-                R.drawable.enemy_attack4,
-                R.drawable.enemy_attack5,
-                R.drawable.enemy_attack6,
-//                R.drawable.enemy_attack7
-            ))
-
+            when (worldNumber) {
+                2 -> {
+                    // Mundo 1 - Texturas básicas
+                    idleFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.e1parado1,
+                            R.drawable.e1parado2,
+                            R.drawable.e1parado3,
+                            R.drawable.e1parado4,
+                            R.drawable.e1parado5,
+                            R.drawable.e1parado6
+                        )
+                    )
+                    moveFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.e1move1,
+                            R.drawable.e1move2,
+                            R.drawable.e1move3,
+                            R.drawable.e1move4,
+                            R.drawable.e1move5,
+                            R.drawable.e1move6
+                        )
+                    )
+                    attackFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.e1attack1,
+                            R.drawable.e1attack2,
+                            R.drawable.e1attack3,
+                            R.drawable.e1attack4,
+                            R.drawable.e1attack5,
+                            R.drawable.e1attack6
+                        )
+                    )
+                }
+                3 -> {
+                    // Mundo 2 - Texturas avanzadas
+                    idleFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.e2parado1,
+                            R.drawable.e2parado2,
+                            R.drawable.e2parado3,
+                            R.drawable.e2parado4,
+                            R.drawable.e2parado5,
+                            R.drawable.e2parado6
+                        )
+                    )
+                    moveFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.e2move1,
+                            R.drawable.e2move2,
+                            R.drawable.e2move3,
+                            R.drawable.e2move4,
+                            R.drawable.e2move5,
+                            R.drawable.e2move6
+                        )
+                    )
+                    attackFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.e2attack1,
+                            R.drawable.e2attack2,
+                            R.drawable.e2attack3,
+                            R.drawable.e2attack4,
+                            R.drawable.e2attack5,
+                            R.drawable.e2attack6
+                        )
+                    )
+                }
+                4 -> {
+                    // Mundo 1 - Texturas básicas
+                    idleFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.e3parado1,
+                            R.drawable.e3parado2,
+                            R.drawable.e3parado3,
+                            R.drawable.e3parado4,
+                            R.drawable.e3parado5,
+                            R.drawable.e3parado6
+                        )
+                    )
+                    moveFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.e3move3,
+                            R.drawable.e3move2,
+                            R.drawable.e3move3,
+                            R.drawable.e3move4,
+                            R.drawable.e3move5,
+                            R.drawable.e3move6
+                        )
+                    )
+                    attackFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.e3attack1,
+                            R.drawable.e3attack2,
+                            R.drawable.e3attack3,
+                            R.drawable.e3attack4,
+                            R.drawable.e3attack5,
+                            R.drawable.e3attack6
+                        )
+                    )
+                }
+                else -> {
+                    // Mundo por defecto - Texturas genéricas
+                    idleFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.enemy_parado1,
+                            R.drawable.enemy_parado2,
+                            R.drawable.enemy_parado3,
+                            R.drawable.enemy_parado4,
+                            R.drawable.enemy_parado5,
+                            R.drawable.enemy_parado6
+                        )
+                    )
+                    moveFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.enemy_move1,
+                            R.drawable.enemy_move2,
+                            R.drawable.enemy_move3,
+                            R.drawable.enemy_move4,
+                            R.drawable.enemy_move5,
+                            R.drawable.enemy_move6
+                        )
+                    )
+                    attackFrames = loadFrames(
+                        context, arrayOf(
+                            R.drawable.enemy_attack1,
+                            R.drawable.enemy_attack2,
+                            R.drawable.enemy_attack3,
+                            R.drawable.enemy_attack4,
+                            R.drawable.enemy_attack5,
+                            R.drawable.enemy_attack6
+                        )
+                    )
+                }
+            }
             return Sprite(idleFrames, moveFrames, attackFrames)
         }
 
-        private fun loadFrames(context: Context, resourceIds: Array<Int>): List<Bitmap> {
+        fun loadFrames(context: Context, resourceIds: Array<Int>): List<Bitmap> {
             return resourceIds.mapNotNull { resourceId ->
                 BitmapFactory.decodeResource(context.resources, resourceId)?.let {
                     Bitmap.createScaledBitmap(it, SPRITE_WIDTH, SPRITE_HEIGHT, true)
@@ -104,7 +213,4 @@ class Enemy(context: Context, x: Float, y: Float) : Personaje(loadEnemySprite(co
             startY -= heartBitmap.height + 10
         }
     }
-
-
-
 }
