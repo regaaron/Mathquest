@@ -19,7 +19,6 @@ open class Enemy(context: Context, x: Float, y: Float,worldNumber:Int) : Persona
 
             when (worldNumber) {
                 2 -> {
-                    // Mundo 1 - Texturas básicas
                     idleFrames = loadFrames(
                         context, arrayOf(
                             R.drawable.e1parado1,
@@ -52,7 +51,6 @@ open class Enemy(context: Context, x: Float, y: Float,worldNumber:Int) : Persona
                     )
                 }
                 3 -> {
-                    // Mundo 2 - Texturas avanzadas
                     idleFrames = loadFrames(
                         context, arrayOf(
                             R.drawable.e2parado1,
@@ -85,7 +83,6 @@ open class Enemy(context: Context, x: Float, y: Float,worldNumber:Int) : Persona
                     )
                 }
                 4 -> {
-                    // Mundo 1 - Texturas básicas
                     idleFrames = loadFrames(
                         context, arrayOf(
                             R.drawable.e3parado1,

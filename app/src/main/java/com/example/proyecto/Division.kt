@@ -24,7 +24,7 @@ class Division : AppCompatActivity() {
         progresoDBHelper = SQLiteHelper(this) //base de datos
 
         gameView = findViewById(R.id.lienzo)
-        gameView.setWorld(4)
+        gameView.enemy  = Enemy( this,300f, 550f,4)
         gameView.knight.x=500f
         gameView.enemy.x=1500f
         gameView.enemy.direction="izquierda"

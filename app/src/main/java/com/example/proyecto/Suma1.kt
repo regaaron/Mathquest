@@ -25,7 +25,7 @@ class Suma1 : AppCompatActivity() {
         currentLevel = intent.getIntExtra("nivel", 1)
 
         gameView = findViewById(R.id.lienzo)
-        gameView.setWorld(1)
+        gameView.enemy  = Enemy( this,300f, 550f,1)
         gameView.knight.x=500f
         gameView.enemy.x=1500f
         gameView.enemy.direction="izquierda"
