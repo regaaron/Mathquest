@@ -15,30 +15,30 @@ class Enemy1(context: Context, x: Float, y: Float) : Personaje(loadEnemySprite(c
 
         private fun loadEnemySprite(context: Context): Sprite {
             val idleFrames = loadFrames(context, arrayOf(
-                R.drawable.enemy_parado1,
-                R.drawable.enemy_parado2,
-                R.drawable.enemy_parado3,
-                R.drawable.enemy_parado4,
-                R.drawable.enemy_parado5,
-                R.drawable.enemy_parado6
+                R.drawable.e1parado1,
+                R.drawable.e1parado2,
+                R.drawable.e1parado3,
+                R.drawable.e1parado4,
+                R.drawable.e1parado5,
+                R.drawable.e1parado6
             ))
 
             val moveFrames = loadFrames(context, arrayOf(
-                R.drawable.enemy_move1,
-                R.drawable.enemy_move2,
-                R.drawable.enemy_move3,
-                R.drawable.enemy_move4,
-                R.drawable.enemy_move5,
-                R.drawable.enemy_move6
+                R.drawable.e1move1,
+                R.drawable.e1move2,
+                R.drawable.e1move3,
+                R.drawable.e1move4,
+                R.drawable.e1move5,
+                R.drawable.e1move6
             ))
 
             val attackFrames = loadFrames(context, arrayOf(
-                R.drawable.enemy_attack1,
-                R.drawable.enemy_attack2,
-                R.drawable.enemy_attack3,
-                R.drawable.enemy_attack4,
-                R.drawable.enemy_attack5,
-                R.drawable.enemy_attack6,
+                R.drawable.e1attack1,
+                R.drawable.e1attack2,
+                R.drawable.e1attack3,
+                R.drawable.e1attack4,
+                R.drawable.e1attack5,
+                R.drawable.e1attack6,
 //                R.drawable.enemy_attack7
             ))
 

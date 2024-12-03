@@ -14,33 +14,39 @@ class Enemy3(context: Context, x: Float, y: Float) : Personaje(loadEnemySprite(c
         private const val SPRITE_HEIGHT = 600
 
         private fun loadEnemySprite(context: Context): Sprite {
-            val idleFrames = loadFrames(context, arrayOf(
-                R.drawable.enemy_parado1,
-                R.drawable.enemy_parado2,
-                R.drawable.enemy_parado3,
-                R.drawable.enemy_parado4,
-                R.drawable.enemy_parado5,
-                R.drawable.enemy_parado6
-            ))
+            val idleFrames = loadFrames(
+                context, arrayOf(
+                    R.drawable.e3parado1,
+                    R.drawable.e3parado2,
+                    R.drawable.e3parado3,
+                    R.drawable.e3parado4,
+                    R.drawable.e3parado5,
+                    R.drawable.e3parado6
+                )
+            )
 
-            val moveFrames = loadFrames(context, arrayOf(
-                R.drawable.enemy_move1,
-                R.drawable.enemy_move2,
-                R.drawable.enemy_move3,
-                R.drawable.enemy_move4,
-                R.drawable.enemy_move5,
-                R.drawable.enemy_move6
-            ))
+            val moveFrames = loadFrames(
+                context, arrayOf(
+                    R.drawable.e3move1,
+                    R.drawable.e3move3,
+                    R.drawable.e3move3,
+                    R.drawable.e3move4,
+                    R.drawable.e3move5,
+                    R.drawable.e3move6
+                )
+            )
 
-            val attackFrames = loadFrames(context, arrayOf(
-                R.drawable.enemy_attack1,
-                R.drawable.enemy_attack2,
-                R.drawable.enemy_attack3,
-                R.drawable.enemy_attack4,
-                R.drawable.enemy_attack5,
-                R.drawable.enemy_attack6,
+            val attackFrames = loadFrames(
+                context, arrayOf(
+                    R.drawable.e3attack1,
+                    R.drawable.e3attack2,
+                    R.drawable.e3attack3,
+                    R.drawable.e3attack4,
+                    R.drawable.e3attack5,
+                    R.drawable.e3attack6,
 //                R.drawable.enemy_attack7
-            ))
+                )
+            )
 
             return Sprite(idleFrames, moveFrames, attackFrames)
         }
