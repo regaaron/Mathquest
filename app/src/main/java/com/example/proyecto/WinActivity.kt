@@ -16,6 +16,7 @@ class WinActivity : AppCompatActivity() {
         setContentView(R.layout.activity_win)
 
         gameView = findViewById(R.id.lienzo)
+        gameView.enemy  = Enemy( this,300f, 550f,1)
         gameView.knight.x=950f
         gameView.knight.y=550f
         gameView.enemy.x=-300f
