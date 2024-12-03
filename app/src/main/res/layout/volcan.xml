@@ -3,16 +3,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/desierto">
+    android:background="@drawable/volcan">
 
     <!-- Lienzo que ocupa toda la pantalla -->
-
-    <!-- Menú flotante en la esquina superior derecha -->
     <com.example.proyecto.CLienzo
         android:id="@+id/lienzo"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- Menú flotante en la esquina superior derecha -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +61,7 @@
                 android:layout_height="120dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="Título mundo"
-                android:src="@drawable/bandera_amarilla" />
+                android:src="@drawable/bandera_roja" />
 
             <!-- Texto sobre la bandera -->
             <TextView
@@ -70,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:padding="10dp"
-                android:text="Volcan de la \n multiplicación"
+                android:text="Volcan\nDe La\n multiplicacion"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -107,7 +106,7 @@
                 android:id="@+id/btn1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/multibot"
+                android:background="@drawable/buton_level_red"
                 android:contentDescription="Botón 1"
                 android:scaleType="centerInside"
                 />
@@ -172,7 +171,7 @@
                 android:id="@+id/btn2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/multibot"
+                android:background="@drawable/buton_level_red"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -234,7 +233,7 @@
                 android:id="@+id/btn3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/multibot"
+                android:background="@drawable/buton_level_red"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -296,7 +295,7 @@
                 android:id="@+id/btn4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/multibot"
+                android:background="@drawable/buton_level_red"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -358,7 +357,7 @@
                 android:id="@+id/btn5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/multibot"
+                android:background="@drawable/buton_level_red"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />

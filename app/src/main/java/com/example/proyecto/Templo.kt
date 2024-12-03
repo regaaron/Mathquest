@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 
 class Templo : AppCompatActivity(){
 
+
     lateinit var lienzo: CLienzo
     lateinit var progresoDBHelper: SQLiteHelper
     // Variables para los niveles, inicializadas como bloqueados (-1)
@@ -28,7 +29,6 @@ class Templo : AppCompatActivity(){
     var lvl4 = -1
     var lvl5 = -1
     var jugar=1;
-    @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -43,7 +43,7 @@ class Templo : AppCompatActivity(){
 
 // Consultas para obtener los valores de los niveles
         val db = progresoDBHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT lvl1, lvl2, lvl3, lvl4, lvl5 FROM progreso WHERE id = 3", null)
+        val cursor = db.rawQuery("SELECT lvl1, lvl2, lvl3, lvl4, lvl5 FROM progreso WHERE id = 4", null)
 
         val tvNiveles = findViewById<TextView>(R.id.tvNiveles)
 
@@ -263,17 +263,17 @@ class Templo : AppCompatActivity(){
             }
         } else {
             when (jugar) {
-                1 -> startDivisionActivity(1)
-                2 -> startDivisionActivity(2)
-                3 -> startDivisionActivity(3)
-                4 -> startDivisionActivity(4)
-                5 -> startDivisionActivity(5)
+                1 -> startSumaActivity(1)
+                2 -> startSumaActivity(2)
+                3 -> startSumaActivity(3)
+                4 -> startSumaActivity(4)
+                5 -> startSumaActivity(5)
             }
         }
     }
 
 
-    fun startDivisionActivity(nivel: Int) {
+    fun startSumaActivity(nivel: Int) {
         val intent = Intent(this, Division::class.java)
         intent.putExtra("nivel", nivel) // Enviamos el nivel como extra
         startActivity(intent)

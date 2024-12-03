@@ -28,7 +28,6 @@ class Volcan : AppCompatActivity() {
     var lvl4 = -1
     var lvl5 = -1
     var jugar=1;
-    @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -43,7 +42,7 @@ class Volcan : AppCompatActivity() {
 
 // Consultas para obtener los valores de los niveles
         val db = progresoDBHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT lvl1, lvl2, lvl3, lvl4, lvl5 FROM progreso WHERE id = 4", null)
+        val cursor = db.rawQuery("SELECT lvl1, lvl2, lvl3, lvl4, lvl5 FROM progreso WHERE id = 3", null)
 
         val tvNiveles = findViewById<TextView>(R.id.tvNiveles)
 
@@ -263,17 +262,17 @@ class Volcan : AppCompatActivity() {
             }
         } else {
             when (jugar) {
-                1 -> startMultiplicacionActivity(1)
-                2 -> startMultiplicacionActivity(2)
-                3 -> startMultiplicacionActivity(3)
-                4 -> startMultiplicacionActivity(4)
-                5 -> startMultiplicacionActivity(5)
+                1 -> startSumaActivity(1)
+                2 -> startSumaActivity(2)
+                3 -> startSumaActivity(3)
+                4 -> startSumaActivity(4)
+                5 -> startSumaActivity(5)
             }
         }
     }
 
 
-    fun startMultiplicacionActivity(nivel: Int) {
+    fun startSumaActivity(nivel: Int) {
         val intent = Intent(this, Multiplicacion::class.java)
         intent.putExtra("nivel", nivel) // Enviamos el nivel como extra
         startActivity(intent)

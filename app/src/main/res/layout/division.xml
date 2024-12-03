@@ -14,11 +14,12 @@
         android:text=""
         android:textSize="32sp"
         android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Botones de opciones -->
     <LinearLayout
         android:id="@+id/linearLayoutOptions"
         android:layout_width="match_parent"
@@ -34,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:background="@drawable/divires"
+            android:background="@drawable/sumares"
             android:text="Option 1" />
 
         <Button
@@ -42,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:background="@drawable/divires"
+            android:background="@drawable/sumares"
             android:text="Option 2" />
 
         <Button
@@ -50,20 +51,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:background="@drawable/divires"
+            android:background="@drawable/sumares"
             android:text="Option 3" />
 
         <Button
             android:id="@+id/btnOption4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/divires"
+            android:background="@drawable/sumares"
             android:text="Option 4" />
     </LinearLayout>
+
 
     <!-- Vista del juego -->
     <com.example.proyecto.GameView
         android:id="@+id/lienzo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
 </androidx.constraintlayout.widget.ConstraintLayout>

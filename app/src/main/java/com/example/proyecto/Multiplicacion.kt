@@ -16,18 +16,20 @@ class Multiplicacion : AppCompatActivity() {
     lateinit var progresoDBHelper: SQLiteHelper
     private var currentLevel: Int = 1
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.multiplicacion)
+        setContentView(R.layout.suma1)
 
         currentLevel = intent.getIntExtra("nivel", 1)
-        progresoDBHelper = SQLiteHelper(this) //base de datos
 
         gameView = findViewById(R.id.lienzo)
         gameView.enemy  = Enemy( this,300f, 550f,3)
         gameView.knight.x=500f
         gameView.enemy.x=1500f
         gameView.enemy.direction="izquierda"
+
+        progresoDBHelper = SQLiteHelper(this) //base de datos
 
         tvOperation = findViewById(R.id.tvOperation)
         options = listOf(
@@ -54,6 +56,7 @@ class Multiplicacion : AppCompatActivity() {
 
                                 gameView.knight.direction = "derecha" // Actualiza la dirección al final
                                 checkGameOver(1,gameView.knight.lives)
+
                                 setupNewLevel(currentLevel)
                             }
                         }
@@ -68,6 +71,7 @@ class Multiplicacion : AppCompatActivity() {
 
                                 gameView.enemy.direction = "izquierda" // Actualiza la dirección al final
                                 checkGameOver(1,gameView.knight.lives)
+
                                 setupNewLevel(currentLevel)
                             }
                         }
@@ -76,7 +80,6 @@ class Multiplicacion : AppCompatActivity() {
             }
         }
     }
-
     private fun setupNewLevel(nivel: Int) {
         val (range1, range2) = when (nivel) {
             1 -> 1..5 to 1..5 // Nivel 1: Tablas del 1 al 5
@@ -150,7 +153,7 @@ class Multiplicacion : AppCompatActivity() {
             startActivity(win)
             finish()
         }
-        if(gameView.knight.lives<=0){
+        if (gameView.knight.lives <= 0) {
             val lose = Intent(this, LoseActivity::class.java)
             startActivity(lose)
             finish()

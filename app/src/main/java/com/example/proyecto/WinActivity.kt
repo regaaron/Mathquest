@@ -34,6 +34,7 @@ class WinActivity : AppCompatActivity() {
                 "resta" -> startActivity(Intent(this, Desierto::class.java))
                 "multiplicacion" -> startActivity(Intent(this, Volcan::class.java))
                 "division" -> startActivity(Intent(this, Templo::class.java))
+                else -> startActivity(Intent(this, Juego::class.java))
             }
 //            finish()
         }

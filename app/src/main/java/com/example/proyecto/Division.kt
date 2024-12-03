@@ -16,18 +16,20 @@ class Division : AppCompatActivity() {
     lateinit var progresoDBHelper: SQLiteHelper
     private var currentLevel: Int = 1
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.division)
 
         currentLevel = intent.getIntExtra("nivel", 1)
-        progresoDBHelper = SQLiteHelper(this) //base de datos
 
         gameView = findViewById(R.id.lienzo)
         gameView.enemy  = Enemy( this,300f, 550f,4)
         gameView.knight.x=500f
         gameView.enemy.x=1500f
         gameView.enemy.direction="izquierda"
+
+        progresoDBHelper = SQLiteHelper(this) //base de datos
 
         tvOperation = findViewById(R.id.tvOperation)
         options = listOf(
@@ -54,6 +56,7 @@ class Division : AppCompatActivity() {
 
                                 gameView.knight.direction = "derecha" // Actualiza la dirección al final
                                 checkGameOver(1,gameView.knight.lives)
+
                                 setupNewLevel(currentLevel)
                             }
                         }
@@ -68,6 +71,7 @@ class Division : AppCompatActivity() {
 
                                 gameView.enemy.direction = "izquierda" // Actualiza la dirección al final
                                 checkGameOver(1,gameView.knight.lives)
+
                                 setupNewLevel(currentLevel)
                             }
                         }
@@ -76,6 +80,7 @@ class Division : AppCompatActivity() {
             }
         }
     }
+
 
     private fun setupNewLevel(nivel: Int) {
         val (range1, range2) = when (nivel) {
@@ -146,11 +151,11 @@ class Division : AppCompatActivity() {
 
             val win = Intent(this, WinActivity::class.java)
             win.putExtra("vidas", gameView.knight.lives) // Enviamos el nivel como extra
-            win.putExtra("niv", "division")
+            win.putExtra("niv", "divisionya")
             startActivity(win)
             finish()
         }
-        if(gameView.knight.lives<=0){
+        if (gameView.knight.lives <= 0) {
             val lose = Intent(this, LoseActivity::class.java)
             startActivity(lose)
             finish()
