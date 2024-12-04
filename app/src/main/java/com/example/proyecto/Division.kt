@@ -126,6 +126,7 @@ class Division : AppCompatActivity() {
             button.text = answers[index].toString()
         }
     }
+
     private fun checkGameOver(nivel: Int, vidas: Int) {
         println("GameOver :Ganaste")
         if (gameView.enemy.lives <= 0) {
@@ -133,7 +134,7 @@ class Division : AppCompatActivity() {
             val puntajeActual = progresoDBHelper.obtenerPuntajeNivel(4, currentLevel)
 
             // Actualizar solo si las vidas obtenidas son mejores
-            if (vidas > puntajeActual!!) {
+            if (puntajeActual == null || vidas > puntajeActual) {
                 progresoDBHelper.modificarNivel(4, currentLevel, vidas)
             }
 
@@ -141,10 +142,14 @@ class Division : AppCompatActivity() {
             val siguienteNivel = currentLevel + 1
             if (siguienteNivel <= 5) { // Asegúrate de no pasar el límite de niveles
                 val estadoSiguienteNivel = progresoDBHelper.obtenerPuntajeNivel(4, siguienteNivel)
+                println("verifique siguiente nivel")//
                 if (estadoSiguienteNivel == null) { // Si está bloqueado (NULL)
-                    progresoDBHelper.modificarNivel(4, siguienteNivel, 0) // Desbloquear el nivel
+                    println("hola sou el siguiente y estoy en null")//
+                    progresoDBHelper.modificarNivel(4, siguienteNivel, 0)
+                // Desbloquear el nivel
                 }
             }
+            println("sali de verificar siguiente nivel")//
 
             // Avanza al siguiente nivel en la lógica del juego
             currentLevel = siguienteNivel
