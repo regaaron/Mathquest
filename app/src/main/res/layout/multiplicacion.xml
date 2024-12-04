@@ -36,7 +36,12 @@
             android:layout_height="wrap_content"
 
             android:background="@drawable/sumares"
-            android:text="Option 1" />
+            android:text="Option 1"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="gravity"
+            android:elevation="3dp" />
 
         <Button
             android:id="@+id/btnOption2"
@@ -44,7 +49,12 @@
             android:layout_height="wrap_content"
 
             android:background="@drawable/sumares"
-            android:text="Option 2" />
+            android:text="Option 2"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="gravity"
+            android:elevation="3dp" />
 
         <Button
             android:id="@+id/btnOption3"
@@ -52,14 +62,24 @@
             android:layout_height="wrap_content"
 
             android:background="@drawable/sumares"
-            android:text="Option 3" />
+            android:text="Option 3"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="gravity"
+            android:elevation="3dp" />
 
         <Button
             android:id="@+id/btnOption4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/sumares"
-            android:text="Option 4" />
+            android:text="Option 4"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="gravity"
+            android:elevation="3dp" />
     </LinearLayout>
 
 
