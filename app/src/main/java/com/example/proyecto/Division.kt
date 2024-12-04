@@ -151,7 +151,7 @@ class Division : AppCompatActivity() {
 
             val win = Intent(this, WinActivity::class.java)
             win.putExtra("vidas", gameView.knight.lives) // Enviamos el nivel como extra
-            win.putExtra("niv", "divisionya")
+            win.putExtra("niv", "division")
             startActivity(win)
             finish()
         }
