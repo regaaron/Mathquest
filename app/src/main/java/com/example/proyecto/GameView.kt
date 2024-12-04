@@ -61,7 +61,7 @@ class GameView @JvmOverloads constructor(
 
         // Verifica si hay un resultado ingresado
         if (userResult != null && gameState == null) {
-            gameState = if (userResult == currentLevel?.expectedResult) "Ganaste" else "Perdiste"
+            //gameState = if (userResult == currentLevel?.expectedResult) "Ganaste" else "Perdiste"
         }
     }
 
@@ -101,8 +101,8 @@ class GameView @JvmOverloads constructor(
 
             // Dibuja el estado del juego si aplica
             if (gameState != null) {
-                paint.color = if (gameState == "Ganaste") Color.GREEN else Color.RED
-                canvas.drawText(gameState!!, width / 2f, height / 2f, paint)
+                //paint.color = if (gameState == "Ganaste") Color.GREEN else Color.RED
+                //canvas.drawText(gameState!!, width / 2f, height / 2f, paint)
             }
 
             // Muestra el tiempo transcurrido
