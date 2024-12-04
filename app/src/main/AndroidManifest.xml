@@ -34,6 +34,7 @@
         <activity android:name=".Division"/>
         <activity android:name=".WinActivity" />
         <activity android:name=".LoseActivity" />
+        <activity android:name=".Infinito"/>
         <activity
             android:name=".PreSuma"
             android:screenOrientation="landscape" />
