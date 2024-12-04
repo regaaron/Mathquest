@@ -22,7 +22,7 @@ class MenuMiniJuegos  : AppCompatActivity(){
 
         var btnModoInifinito = findViewById<ImageButton>(R.id.btnModoInfinito)
         btnModoInifinito.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, Infinito::class.java)
             startActivity(intent)
         }
 
