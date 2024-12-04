@@ -16,6 +16,7 @@ class Infinito : AppCompatActivity() {
     lateinit var progresoDBHelper: SQLiteHelper
     private var currentLevel: Int = 1
     private var puntaje:Int=0
+    private var racha:Int=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class Infinito : AppCompatActivity() {
 
                 if (userAnswer == correctAnswer) {
                     puntaje++
+                    racha++
                     gameView.knight.spriteXTarget = 1480
                     gameView.knight.moveSpriteToTarget {
                         gameView.knight.attack {
@@ -54,10 +56,15 @@ class Infinito : AppCompatActivity() {
                                 gameView.knight.direction = "derecha" // Actualiza la dirección al final
                                 checkGameOver()
                                 setupNewLevel()
+                                if(racha==5){
+                                    gameView.knight.lives++
+                                    racha=0
+                                }
                             }
                         }
                     }
                 } else {
+                    racha = 0
                     gameView.enemy.spriteXTarget = 600
                     gameView.enemy.moveSpriteToTarget {
                         gameView.enemy.attack {

@@ -28,6 +28,14 @@ class Resta : AppCompatActivity() {
         gameView.knight.x=500f
         gameView.enemy.x=1500f
         gameView.enemy.direction="izquierda"
+        if(currentLevel == 1 || currentLevel==2)
+            gameView.enemy.lives = 3
+        else{
+            if(currentLevel == 3 || currentLevel==4)
+                gameView.enemy.lives = 4
+            else
+                gameView.enemy.lives = 5
+        }
 
         tvOperation = findViewById(R.id.tvOperation)
         options = listOf(
