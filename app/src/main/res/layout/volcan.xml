@@ -430,10 +430,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/verde"
             android:text="Jugar"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="gravity"
+            android:elevation="3dp"  />
 
         <!-- Botón de Salir -->
         <Button
@@ -442,8 +443,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rojo"
             android:text="Salir"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="gravity"
+            android:elevation="3dp"  />
 
     </LinearLayout>
 

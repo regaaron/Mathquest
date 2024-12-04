@@ -15,6 +15,7 @@ class Infinito : AppCompatActivity() {
     private var correctAnswer: Int = 0
     lateinit var progresoDBHelper: SQLiteHelper
     private var currentLevel: Int = 1
+    private var puntaje:Int=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class Infinito : AppCompatActivity() {
                 gameView.setUserResult(userAnswer)
 
                 if (userAnswer == correctAnswer) {
+                    puntaje++
                     gameView.knight.spriteXTarget = 1480
                     gameView.knight.moveSpriteToTarget {
                         gameView.knight.attack {
@@ -64,6 +66,7 @@ class Infinito : AppCompatActivity() {
                             gameView.enemy.moveSpriteToTarget {
 
                                 gameView.enemy.direction = "izquierda" // Actualiza la dirección al final
+                                checkGameOver()
                             }
                         }
                     }
@@ -149,6 +152,8 @@ class Infinito : AppCompatActivity() {
         println("GameOver :Ganaste")
         if(gameView.knight.lives <= 0){
             val lose = Intent(this, LoseActivity::class.java)
+            lose.putExtra("niv", "infinito")
+            lose.putExtra("puntaje", puntaje.toString())
             startActivity(lose)
             finish()
         }

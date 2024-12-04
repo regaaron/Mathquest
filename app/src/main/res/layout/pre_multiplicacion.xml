@@ -62,7 +62,11 @@
                 android:background="@drawable/rojo"
                 android:textColor="@color/white"
                 android:layout_marginEnd="16dp"
-                android:textStyle="bold" />
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="gravity"
+                android:elevation="3dp"  />
 
             <Button
                 android:id="@+id/btn_continue"
@@ -71,7 +75,11 @@
                 android:text="Continuar"
                 android:background="@drawable/verde"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="gravity"
+                android:elevation="3dp"  />
         </LinearLayout>
 
     </LinearLayout>

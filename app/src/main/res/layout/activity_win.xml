@@ -33,7 +33,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/verde" />
+        android:background="@drawable/verde"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical"
+        android:textAlignment="gravity"
+        android:elevation="3dp"/>
 
     <!-- Vista de juego ocupando toda la pantalla -->
     <com.example.proyecto.GameView
