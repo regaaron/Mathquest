@@ -4,10 +4,18 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.media.MediaPlayer
 import com.example.proyecto.Knight.Companion
 
 
 open class Enemy(context: Context, x: Float, y: Float,worldNumber:Int) : Personaje(loadEnemySprite(context,worldNumber), x, y) {
+    init {
+        when(worldNumber){
+            3 -> {attackSound = MediaPlayer.create(context, R.raw.ataque4)}
+            4 -> {attackSound = MediaPlayer.create(context, R.raw.ataque3)}
+            else -> {attackSound = MediaPlayer.create(context, R.raw.ataque12)} //1 y 2
+        }
+    }
     companion object {
         const val SPRITE_WIDTH = 600
         private const val SPRITE_HEIGHT = 600

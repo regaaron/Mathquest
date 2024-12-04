@@ -1,6 +1,7 @@
 package com.example.proyecto
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,10 +17,16 @@ class Memorama : AppCompatActivity() {
     private val cards = mutableListOf<Card>()
     private var flippedCard: Card? = null
     private var isProcessing: Boolean = false // Evita más clics mientras se procesan cartas
+    var matchSound: MediaPlayer? = null
+    var touchSound: MediaPlayer? = null
+    var wrongSound: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.memorama)
+        matchSound = MediaPlayer.create(this, R.raw.match)
+        touchSound= MediaPlayer.create(this, R.raw.click)
+        wrongSound = MediaPlayer.create(this, R.raw.wrong)
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(this, 4) // Configura la cuadrícula de 4 columnas
@@ -55,6 +62,7 @@ class Memorama : AppCompatActivity() {
     }
 
     private fun onCardClicked(card: Card) {
+        touchSound?.start()
         if (isProcessing || card.isFaceUp || card.isMatched) return
 
         card.isFaceUp = true
@@ -66,10 +74,12 @@ class Memorama : AppCompatActivity() {
             isProcessing = true
             if (isMatch(flippedCard!!, card)) {
                 card.isMatched = true
+                matchSound?.start()
                 flippedCard?.isMatched = true
                 flippedCard = null
                 isProcessing = false
             } else {
+                wrongSound?.start()
                 Handler(Looper.getMainLooper()).postDelayed({
                     card.isFaceUp = false
                     flippedCard?.isFaceUp = false
