@@ -19,7 +19,7 @@
             <!-- ImageButton con la imagen de fondo -->
 
             <ImageButton
-                android:id="@+id/btnJugar"
+                android:id="@+id/btnMemorama"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/button_red"
@@ -34,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:textAlignment="center"
-                android:text="Jugar"
+                android:text="Memorama"
                 android:layout_marginTop="20dp"
                 android:textColor="@android:color/background_dark"
                 android:textSize="24sp"
@@ -50,7 +50,7 @@
             <!-- ImageButton con la imagen de fondo -->
 
             <ImageButton
-                android:id="@+id/btnAyuda"
+                android:id="@+id/btnModoInfinito"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/button_red"
@@ -65,7 +65,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:textAlignment="center"
-                android:text="Mini juegos"
+                android:text="Modo infinito"
                 android:layout_marginTop="20dp"
                 android:textColor="@android:color/background_dark"
                 android:textSize="24sp"
@@ -83,7 +83,7 @@
             <!-- ImageButton con la imagen de fondo -->
 
             <ImageButton
-                android:id="@+id/btnSalir"
+                android:id="@+id/btnRegresar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/button_red"
@@ -98,7 +98,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:textAlignment="center"
-                android:text="Salir del juego"
+                android:text="Regresar"
                 android:layout_marginTop="20dp"
                 android:textColor="@android:color/background_dark"
                 android:textSize="24sp"
