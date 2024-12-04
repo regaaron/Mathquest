@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         var btnAyuda = findViewById<ImageButton>(R.id.btnAyuda)
         btnAyuda.setOnClickListener {
-            val intent = Intent(this, Ayuda::class.java)
+            val intent = Intent(this, MenuMiniJuegos::class.java)
             startActivity(intent)
         }
 

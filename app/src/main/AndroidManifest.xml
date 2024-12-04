@@ -47,6 +47,9 @@
         <activity
             android:name=".PreDivision"
             android:screenOrientation="landscape" />
+        <activity android:name=".MenuMiniJuegos" />
+        <activity android:name=".Memorama"
+            android:screenOrientation="portrait"/>
 
     </application>
 
