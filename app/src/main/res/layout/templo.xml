@@ -61,7 +61,7 @@
                 android:layout_height="120dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="Título mundo"
-                android:src="@drawable/bandera_roja" />
+                android:src="@drawable/bandera_amarilla" />
 
             <!-- Texto sobre la bandera -->
             <TextView
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:padding="10dp"
-                android:text="Templo"
+                android:text="Templo\nDe la \nDivision"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -106,7 +106,7 @@
                 android:id="@+id/btn1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/buton_level_red"
+                android:background="@drawable/buton_level_amarillo"
                 android:contentDescription="Botón 1"
                 android:scaleType="centerInside"
                 />
@@ -171,7 +171,7 @@
                 android:id="@+id/btn2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/buton_level_red"
+                android:background="@drawable/buton_level_amarillo"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -233,7 +233,7 @@
                 android:id="@+id/btn3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/buton_level_red"
+                android:background="@drawable/buton_level_amarillo"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -295,7 +295,7 @@
                 android:id="@+id/btn4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/buton_level_red"
+                android:background="@drawable/buton_level_amarillo"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -357,7 +357,7 @@
                 android:id="@+id/btn5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/buton_level_red"
+                android:background="@drawable/buton_level_amarillo"
                 android:contentDescription="Botón 2"
                 android:scaleType="centerInside"
                 />
@@ -447,16 +447,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tvNiveles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:text="hola"/>
-    </LinearLayout>
+
 
 </FrameLayout>

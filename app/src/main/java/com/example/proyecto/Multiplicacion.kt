@@ -19,7 +19,7 @@ class Multiplicacion : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.suma1)
+        setContentView(R.layout.multiplicacion)
 
         currentLevel = intent.getIntExtra("nivel", 1)
 

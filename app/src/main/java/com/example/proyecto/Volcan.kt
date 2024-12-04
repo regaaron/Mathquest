@@ -44,7 +44,7 @@ class Volcan : AppCompatActivity() {
         val db = progresoDBHelper.readableDatabase
         val cursor = db.rawQuery("SELECT lvl1, lvl2, lvl3, lvl4, lvl5 FROM progreso WHERE id = 3", null)
 
-        val tvNiveles = findViewById<TextView>(R.id.tvNiveles)
+
 
 
 
@@ -57,14 +57,9 @@ class Volcan : AppCompatActivity() {
             lvl4 = if (cursor.isNull(cursor.getColumnIndex("lvl4"))) -1 else cursor.getInt(cursor.getColumnIndex("lvl4"))
             lvl5 = if (cursor.isNull(cursor.getColumnIndex("lvl5"))) -1 else cursor.getInt(cursor.getColumnIndex("lvl5"))
 
-            // Mostramos los valores en el TextView
-            tvNiveles.text = """
-        Nivel 1: $lvl1 - Nivel 2: $lvl2
-        Nivel 3: $lvl3 - Nivel 4: $lvl4
-        Nivel 5: $lvl5
-    """.trimIndent()
+
         } else {
-            tvNiveles.text = "No se encontraron niveles."
+
         }
 
         cursor.close()

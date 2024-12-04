@@ -32,33 +32,34 @@
 
         <Button
             android:id="@+id/btnOption1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-
-            android:background="@drawable/sumares"
+            android:layout_weight="1"
+            android:background="@drawable/multires"
             android:text="Option 1" />
 
         <Button
             android:id="@+id/btnOption2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-
-            android:background="@drawable/sumares"
+            android:layout_weight="1"
+            android:background="@drawable/multires"
             android:text="Option 2" />
 
         <Button
             android:id="@+id/btnOption3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-
-            android:background="@drawable/sumares"
+            android:layout_weight="1"
+            android:background="@drawable/multires"
             android:text="Option 3" />
 
         <Button
             android:id="@+id/btnOption4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/sumares"
+            android:layout_weight="1"
+            android:background="@drawable/multires"
             android:text="Option 4" />
     </LinearLayout>
 
