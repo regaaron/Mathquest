@@ -57,7 +57,6 @@ class Suma1 : AppCompatActivity() {
 
                                 gameView.knight.direction = "derecha" // Actualiza la dirección al final
                                 checkGameOver(1,gameView.knight.lives)
-
                                 setupNewLevel(currentLevel)
                             }
                         }
@@ -72,7 +71,6 @@ class Suma1 : AppCompatActivity() {
 
                                 gameView.enemy.direction = "izquierda" // Actualiza la dirección al final
                                 checkGameOver(1,gameView.knight.lives)
-
                                 setupNewLevel(currentLevel)
                             }
                         }
@@ -154,7 +152,7 @@ class Suma1 : AppCompatActivity() {
             val puntajeActual = progresoDBHelper.obtenerPuntajeNivel(1, currentLevel)
 
             // Actualizar solo si las vidas obtenidas son mejores
-            if (vidas > puntajeActual!!) {
+            if (puntajeActual == null || vidas > puntajeActual) {
                 progresoDBHelper.modificarNivel(1, currentLevel, vidas)
             }
 
@@ -171,7 +169,7 @@ class Suma1 : AppCompatActivity() {
             currentLevel = siguienteNivel
 
             val win = Intent(this, WinActivity::class.java)
-            win.putExtra("vidas", gameView.knight.lives) // Enviamos el nivel como extra
+            win.putExtra("vidas", gameView.knight.lives)
             win.putExtra("niv", "suma")
             startActivity(win)
             finish()

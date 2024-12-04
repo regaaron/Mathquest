@@ -130,7 +130,7 @@ class Resta : AppCompatActivity() {
             val puntajeActual = progresoDBHelper.obtenerPuntajeNivel(2, currentLevel)
 
             // Actualizar solo si las vidas obtenidas son mejores
-            if (vidas > puntajeActual!!) {
+            if (puntajeActual == null || vidas > puntajeActual) {
                 progresoDBHelper.modificarNivel(2, currentLevel, vidas)
             }
 
@@ -138,11 +138,13 @@ class Resta : AppCompatActivity() {
             val siguienteNivel = currentLevel + 1
             if (siguienteNivel <= 5) { // Asegúrate de no pasar el límite de niveles
                 val estadoSiguienteNivel = progresoDBHelper.obtenerPuntajeNivel(2, siguienteNivel)
+                println("verifique siguiente nivel")//
                 if (estadoSiguienteNivel == null) { // Si está bloqueado (NULL)
+                    println("hola sou el siguiente y estoy en null")//
                     progresoDBHelper.modificarNivel(2, siguienteNivel, 0) // Desbloquear el nivel
                 }
             }
-
+            println("sali de verificar siguiente nivel")//
             // Avanza al siguiente nivel en la lógica del juego
             currentLevel = siguienteNivel
 

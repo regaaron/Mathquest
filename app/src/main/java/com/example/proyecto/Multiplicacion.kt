@@ -131,7 +131,7 @@ class Multiplicacion : AppCompatActivity() {
             val puntajeActual = progresoDBHelper.obtenerPuntajeNivel(3, currentLevel)
 
             // Actualizar solo si las vidas obtenidas son mejores
-            if (vidas > puntajeActual!!) {
+            if (puntajeActual == null || vidas > puntajeActual) {
                 progresoDBHelper.modificarNivel(3, currentLevel, vidas)
             }
 
@@ -148,7 +148,7 @@ class Multiplicacion : AppCompatActivity() {
             currentLevel = siguienteNivel
 
             val win = Intent(this, WinActivity::class.java)
-            win.putExtra("vidas", gameView.knight.lives) // Enviamos el nivel como extra
+            win.putExtra("vidas", gameView.knight.lives)
             win.putExtra("niv", "multiplicacion")
             startActivity(win)
             finish()

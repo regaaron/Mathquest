@@ -218,7 +218,6 @@ class Volcan : AppCompatActivity() {
                     lienzo.moveSpriteToTarget()
                     jugar=5
                 }
-
             }
         }
 
